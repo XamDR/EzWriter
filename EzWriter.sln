@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzWriterModel", "EzWriterModel\EzWriterModel.csproj", "{6E9A8D46-20D3-4245-B003-900BD765F7F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzWriterCustomControls", "EzWriterCustomControls\EzWriterCustomControls.csproj", "{2AC784E6-7BEF-4427-AAF4-716F55D3C548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzWriterViewModel", "EzWriterViewModel\EzWriterViewModel.csproj", "{0349C55D-5078-431E-9296-7C4BE1A521D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzWriterTests", "EzWriterTests\EzWriterTests.csproj", "{212A62B5-0BE7-4387-9BBF-BE4FFBBA2974}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzWriterView", "EzWriterView\EzWriterView.csproj", "{4060B3C5-C251-40F8-8BAC-9332B139CD37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzWriterSpellCheckingEngine", "EzWriterSpellCheckingEngine\EzWriterSpellCheckingEngine.csproj", "{62010B78-EB2B-446D-9884-90A97C6038B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E9A8D46-20D3-4245-B003-900BD765F7F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E9A8D46-20D3-4245-B003-900BD765F7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E9A8D46-20D3-4245-B003-900BD765F7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E9A8D46-20D3-4245-B003-900BD765F7F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AC784E6-7BEF-4427-AAF4-716F55D3C548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC784E6-7BEF-4427-AAF4-716F55D3C548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC784E6-7BEF-4427-AAF4-716F55D3C548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC784E6-7BEF-4427-AAF4-716F55D3C548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0349C55D-5078-431E-9296-7C4BE1A521D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0349C55D-5078-431E-9296-7C4BE1A521D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0349C55D-5078-431E-9296-7C4BE1A521D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0349C55D-5078-431E-9296-7C4BE1A521D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{212A62B5-0BE7-4387-9BBF-BE4FFBBA2974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{212A62B5-0BE7-4387-9BBF-BE4FFBBA2974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{212A62B5-0BE7-4387-9BBF-BE4FFBBA2974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{212A62B5-0BE7-4387-9BBF-BE4FFBBA2974}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4060B3C5-C251-40F8-8BAC-9332B139CD37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4060B3C5-C251-40F8-8BAC-9332B139CD37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4060B3C5-C251-40F8-8BAC-9332B139CD37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4060B3C5-C251-40F8-8BAC-9332B139CD37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62010B78-EB2B-446D-9884-90A97C6038B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62010B78-EB2B-446D-9884-90A97C6038B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62010B78-EB2B-446D-9884-90A97C6038B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62010B78-EB2B-446D-9884-90A97C6038B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5707729-9E18-441A-B180-7FA39746BBD1}
+	EndGlobalSection
+EndGlobal

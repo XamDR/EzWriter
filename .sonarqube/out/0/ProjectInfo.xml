@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>EzWriterModel</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>6e9a8d46-20d3-4245-b003-900bd765f7f4</ProjectGuid>
+  <FullPath>D:\Programacion\CSharp\WPF\EzWriter\EzWriterModel\EzWriterModel.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="D:\Programacion\CSharp\WPF\EzWriter\.sonarqube\out\0\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePath">D:\Programacion\CSharp\WPF\EzWriter\EzWriterModel\bin\Debug\EzWriterModel.dll.RoslynCA.json|D:\Programacion\CSharp\WPF\EzWriter\EzWriterModel\bin\Debug\EzWriterModel.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPath">D:\Programacion\CSharp\WPF\EzWriter\.sonarqube\out\0</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+</ProjectInfo>

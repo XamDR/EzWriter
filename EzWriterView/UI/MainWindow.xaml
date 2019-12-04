@@ -1,0 +1,780 @@
+﻿<Window x:Class="EzWriterView.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="clr-namespace:EzWriterModel.Enums;assembly=EzWriterModel"
+        xmlns:behaviors="clr-namespace:EzWriterView.Behaviors"
+        xmlns:conv="clr-namespace:EzWriterView.Converters"
+        xmlns:local="clr-namespace:EzWriterView.UI"
+        xmlns:vm="clr-namespace:EzWriterViewModel.Core;assembly=EzWriterViewModel"
+        xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        mc:Ignorable="d"        
+        WindowState="Maximized" 
+        Title="{Binding MainWindow.Title, StringFormat=' \{0\}EzWriter'}">
+    
+    <Window.DataContext>
+        <vm:WordProcessor/>
+    </Window.DataContext>
+
+    <i:Interaction.Behaviors>
+        <behaviors:ChildWindowBehavior WindowType="{x:Type local:InsertTableDialog}" IsOnScreen="{Binding MainWindow.IsInsertTableDialogOpen}"
+                                       ViewModel="{x:Type vm:InsertTableViewModel}" IsModal="True"
+                                       Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+        
+        <behaviors:ChildWindowBehavior WindowType="{x:Type local:FindReplaceDialog}" IsOnScreen="{Binding MainWindow.IsFindReplaceDialogOpen}"
+                                       ViewModel="{x:Type vm:FindReplaceViewModel}" IsModal="False"
+                                       Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+
+        <behaviors:ChildWindowBehavior WindowType="{x:Type local:InsertHyperlinkDialog}" IsOnScreen="{Binding MainWindow.IsInsertHyperlinkDialogOpen}"
+                                       ViewModel="{x:Type vm:InsertHyperlinkViewModel}" IsModal="True"
+                                       Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+
+        <behaviors:ChildWindowBehavior WindowType="{x:Type local:AboutDialog}" IsOnScreen="{Binding MainWindow.IsAboutDialogOpen}"
+                                       ViewModel="{x:Type vm:AboutDialogViewModel}" IsModal="True"
+                                       Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"/>
+
+    </i:Interaction.Behaviors>
+    
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <conv:BooleanToWinformsHostConverter x:Key="BooleanToWinformsHost"/>
+        <conv:ColorToFontColorConverter x:Key="ColorToFontColor"/>
+        <conv:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
+        <conv:StringToCharSpacingConverter x:Key="StringToCharSpacing"/>
+        <conv:StringToLineSpacingConverter x:Key="StringToLineSpacing"/>
+        <conv:StringToPageLayoutConverter x:Key="StringToPageLayout"/>
+        <conv:StringToPageZoomConverter x:Key="StringToPageZoom"/>
+        <conv:StringToZoomFactorConverter x:Key="StringToZoomFactor"/>
+        <CollectionViewSource x:Key="SortedFontsCollection" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+            <CollectionViewSource.SortDescriptions>
+                <componentModel:SortDescription PropertyName="Source"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <vm:WordProcessorCollections x:Key="WordProcessorCollection"/>
+        <ObjectDataProvider x:Key="FontColors" ObjectInstance="{x:Type Colors}" MethodName="GetProperties"/>
+    </Window.Resources>
+    
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding ToggleBoldCommand}" Gesture="Ctrl+B"/>
+        <KeyBinding Command="{Binding ToggleItalicCommand}" Gesture="Ctrl+K"/>
+        <KeyBinding Command="{Binding ToggleUnderlineCommand}" Gesture="Ctrl+U"/>
+        <KeyBinding Command="{Binding ToggleStrikethroughCommand}" Gesture="Ctrl+T"/>
+        <KeyBinding Command="{Binding ToggleShadowCommand}" Gesture="Ctrl+H"/>
+        <KeyBinding Command="{Binding SaveFileCommand}" Gesture="Ctrl+S"/>
+        <KeyBinding Command="{Binding OpenFileCommand}" Gesture="Ctrl+O"/>
+        <KeyBinding Command="{Binding DecrementFontSizeCommand}" Gesture="Ctrl+Shift+I"/>
+        <KeyBinding Command="{Binding IncrementFontSizeCommand}" Gesture="Ctrl+I"/>
+        <KeyBinding Command="{Binding AddTabCommand}" Gesture="Ctrl+Tab"/>
+        <KeyBinding Command="{Binding CreateDocumentCommand}" Gesture="Ctrl+N"/>
+        <KeyBinding Command="{Binding PrintCommand}" Gesture="Ctrl+P"/>
+    </Window.InputBindings>
+    
+    <DockPanel LastChildFill="True" Margin="0 -22 0 0">
+        <Ribbon DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="Continue">
+
+            <!--Botón de ayuda-->
+            <Ribbon.HelpPaneContent>
+                <RibbonButton SmallImageSource="/Resources/Help_16x16.png"/>
+            </Ribbon.HelpPaneContent>
+            
+            <!--El menú principal del Ribbon-->
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu SmallImageSource="/Resources/MenuItem_16x.png">
+                    <RibbonApplicationMenuItem Header="Nuevo" Command="{Binding CreateDocumentCommand}" ImageSource="/Resources/New_32x.png"/>
+                    <RibbonApplicationMenuItem Header="Abrir" Command="{Binding OpenFileCommand}" ImageSource="/Resources/Open_File_32x.png"/>
+                    <RibbonApplicationMenuItem Header="Guardar como" Command="{Binding SaveFileCommand}" ImageSource="/Resources/Save_As_32x.png"/>
+                    <RibbonSeparator/>
+                    <RibbonApplicationMenuItem Header="Vista previa de impresión" 
+                                               Command="{Binding MainWindow.ShowTabCommand}" ImageSource="/Resources/Vista_Previa_32x.png"/>
+                    <RibbonApplicationMenuItem Header="Configurar página" ImageSource="/Resources/Configurar_impresora_32x.png"
+                                               Command="{Binding ChangePageSettingsCommand}"/>
+                    <RibbonApplicationMenuItem Header="Imprimir" Command="{Binding PrintCommand}" ImageSource="/Resources/Print_32x32.png"/>                    
+                    <RibbonSeparator/>
+                    <RibbonApplicationMenuItem Header="Acerca de EzWriter" ImageSource="/Resources/About_32x.png"
+                                               Command="{Binding MainWindow.ShowAboutDialogCommand}"/>
+                    <RibbonApplicationMenuItem Header="Salir" ImageSource="/Resources/Exit_Program_32x.png">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                                                    MethodName="Close"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </RibbonApplicationMenuItem>                    
+                </RibbonApplicationMenu>                
+            </Ribbon.ApplicationMenu>
+            
+            <!--El tab Inicio-->
+            <RibbonTab Header="Inicio" Visibility="{Binding MainWindow.IsTabVisible, Converter={StaticResource InverseBooleanToVisibility}}">
+
+                <!--El panel Archivo-->
+                <RibbonGroup Header="Archivo y portapapeles">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <RibbonButton Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0 5 0 0"
+                                      Label="Guardar" Command="{Binding SaveFileCommand}" LargeImageSource="/Resources/Save_32x.png">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Guardar (Ctrl + S)"
+                                               Description="Guarda el documento activo."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Grid.Column="1" Grid.Row="0"
+                                      Label="Rehacer" Command="{Binding CopyCommand}" SmallImageSource="/Resources/EditRedo_16x16.png">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Rehacer (Ctrl + Y)"
+                                               Description="Repite la última acción."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Grid.Column="1" Grid.Row="1" 
+                                      Label="Deshacer" Command="{Binding CopyCommand}" SmallImageSource="/Resources/EditUndo_16x16.png">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Deshacer (Ctrl + Z)"
+                                               Description="Deshace la última acción."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+
+                        <RibbonSplitButton Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" 
+                                           Label="Pegar" Command="{Binding PasteCommand}" CommandParameter="0" LargeImageSource="/Resources/Paste_32x.png">
+                            <RibbonSplitButton.ToolTipTitle>Pegar (Ctrl + V)</RibbonSplitButton.ToolTipTitle>
+                            <RibbonSplitButton.ToolTipDescription>Agrega contenido del portapapeles al documento.</RibbonSplitButton.ToolTipDescription>
+
+                            <!-- Para ver una lista de los formatos del clipboard se puede
+                            revisar el siguiente enlace: https://docs.microsoft.com/es-es/windows/win32/dataxchg/standard-clipboard-formats
+                            En resumen: 0 = RTF, 1 = Text, 3 = CF_METAFILEPICT (Imagen) -->
+
+                            <RibbonMenuItem Header="Mantener formato" Command="{Binding PasteCommand}" CommandParameter="0"/>
+                            <RibbonMenuItem Header="Conservar solo texto" Command="{Binding PasteCommand}" CommandParameter="1"/>
+                            <RibbonMenuItem Header="Imagen" Command="{Binding PasteCommand}" CommandParameter="3"/>
+                        </RibbonSplitButton>
+                        <RibbonButton Grid.Column="4" Grid.Row="0" 
+                                      Label="Copiar" Command="{Binding CopyCommand}" SmallImageSource="/Resources/Copy_16x16.png">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Copiar (Ctrl + C)"
+                                               Description="Coloca una copia de la selección en el portapapeles para que se pueda pegar en otro sitio."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Grid.Column="4" Grid.Row="1" 
+                                      Label="Cortar" Command="{Binding CutCommand}" SmallImageSource="/Resources/Cut_16x.png">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Cortar (Crtl + X)"
+                                               Description="Quita la selección y la coloca en el Portapapeles para que se pueda pegar en otro sitio."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                    </Grid>
+                </RibbonGroup>
+                
+                <!--El panel Fuente-->
+                <RibbonGroup Header="Fuente">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <RibbonComboBox DropDownHeight="500" IsEditable="True" IsTextSearchEnabled="True" 
+                                            CanUserResizeVertically="True" Margin="0 0 2 0">
+                                <RibbonComboBox.Resources>
+                                    <Style x:Key="FontStyle">
+                                        <Setter Property="Control.FontFamily" Value="{Binding}" />
+                                        <Setter Property="Control.FontSize" Value="14" />
+                                    </Style>
+                                    <DataTemplate x:Key="FontTemplate">
+                                        <RibbonGalleryItem>
+                                            <TextBlock Style="{StaticResource FontStyle}" Text="{Binding}" ToolTip="{Binding}"/>
+                                        </RibbonGalleryItem>
+                                    </DataTemplate>
+                                </RibbonComboBox.Resources>
+                                <RibbonComboBox.ToolTip>
+                                    <RibbonToolTip Title="Fuente (Ctrl + Mayús + F)"
+                                                   Description="Selecciona una nueva fuente para el texto."/>
+                                </RibbonComboBox.ToolTip>
+                                <RibbonGallery Command="{Binding ChangeFontNameCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}"
+                                               PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem}">
+                                    <RibbonGalleryCategory Header="  Todas las fuentes"
+                                                           ItemTemplate="{StaticResource FontTemplate}"
+                                                           ItemsSource="{Binding Source={StaticResource SortedFontsCollection}}"/>
+                                </RibbonGallery>
+                            </RibbonComboBox>
+
+                            <RibbonComboBox SelectionBoxWidth="30" IsEditable="True" CanUserResizeVertically="True" 
+                                            ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="2 0 2 0">
+                                <RibbonComboBox.ToolTip>
+                                    <RibbonToolTip Title="  Tamaño de fuente (Ctrl + Mayús + M)"
+                                                   Description="Cambia el tamaño del texto."/>
+                                </RibbonComboBox.ToolTip>
+                                <RibbonGallery MaxColumnCount="1"
+                                           Command="{Binding ChangeFontSizeCommand}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}"
+                                           PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem}">
+                                    <RibbonGalleryCategory ItemsSource="{Binding Source={StaticResource WordProcessorCollection}, Path=FontSizes}"/>
+                                </RibbonGallery>
+                            </RibbonComboBox>
+
+                            <RibbonButton Command="{Binding IncrementFontSizeCommand}" SmallImageSource="/Resources/Increase_Font_16x.png"
+                                          Margin="2 0 2 0">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Aumentar tamaño de fuente."
+                                                   Description="Aumenta el tamaño del texto."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Command="{Binding DecrementFontSizeCommand}" SmallImageSource="/Resources/Decrease_Font_16x.png"
+                                          Margin="2 0 2 0">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Disminuir tamaño de fuente"
+                                                   Description="Disminuye tamaño del texto."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonMenuButton SmallImageSource="/Resources/UpperLower_16x16.png" Margin="2 0 2 0">
+                                <RibbonMenuButton.ToolTipTitle>Cambiar mayúsculas y minúsculas.</RibbonMenuButton.ToolTipTitle>
+                                <RibbonMenuButton.ToolTipDescription>Cambia el texto seleccionado a mayúsculas, minúsculas u otros estilos.</RibbonMenuButton.ToolTipDescription>                                
+                                <RibbonMenuItem Header="Tipo oración"
+                                                Command="{Binding ChangeCaseCommand}"
+                                                CommandParameter="{x:Static model:LetterCase.Title}"/>
+                                <RibbonMenuItem Header="minúsculas"
+                                                Command="{Binding ChangeCaseCommand}"
+                                                CommandParameter="{x:Static model:LetterCase.Lower}"/>
+                                <RibbonMenuItem Header="MAYÚSCULAS"
+                                                Command="{Binding ChangeCaseCommand}"
+                                                CommandParameter="{x:Static model:LetterCase.Upper}"/>
+                                <RibbonMenuItem Header="Poner En Mayúsculas Cada Palabra"
+                                                Command="{Binding ChangeCaseCommand}"
+                                                CommandParameter="{x:Static model:LetterCase.Sentence}"/>
+                                <RibbonMenuItem Header="Alternar mayúsculas y minúsculas"
+                                                Command="{Binding ChangeCaseCommand}"
+                                                CommandParameter="{x:Static model:LetterCase.Toggle}"/>
+                            </RibbonMenuButton>
+                            <RibbonSplitButton SmallImageSource="/Resources/Text_width_16x.png" Margin="2 0 2 0">
+                                <RibbonSplitButton.ToolTipTitle>Espaciado entre caracteres.</RibbonSplitButton.ToolTipTitle>
+                                <RibbonSplitButton.ToolTipDescription>Ajusta el espaciado entre caracteres.</RibbonSplitButton.ToolTipDescription>
+                                <RibbonSplitButton.Resources>
+                                    <DataTemplate x:Key="CharSpacingTemplate">
+                                        <RibbonGalleryItem>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" Width="100"/>
+                                            </StackPanel>
+                                        </RibbonGalleryItem>
+                                    </DataTemplate>
+                                </RibbonSplitButton.Resources>
+                                <RibbonGallery MaxColumnCount="1"
+                                               Command="{Binding ChangeCharacterSpacingCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, 
+                                                                  Converter={StaticResource StringToCharSpacing}}"
+                                               PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem, 
+                                                                         Converter={StaticResource StringToCharSpacing}}">
+                                    <RibbonGalleryCategory ItemsSource="{Binding Source={StaticResource WordProcessorCollection}, Path=CharacterSpacings}"
+                                                           ItemTemplate="{StaticResource CharSpacingTemplate}"/>
+                                </RibbonGallery>
+                            </RibbonSplitButton>
+                            <RibbonButton SmallImageSource="/Resources/ClearFormatting_16x16.png" Margin="2 0 0 0">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="Borrar todo el formato"
+                                                   Description="Quita todo el formato de la selección y deja únicamente texto sin formato."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleBoldCommand}" SmallImageSource="/Resources/Bold_16x16.png">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Negrita (Ctrl + N)"
+                                                   Description="Aplica el formato de negrita al texto seleccionado."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleItalicCommand}" SmallImageSource="/Resources/Italic_16x16.png">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Cursiva (Ctrl + K)"
+                                                   Description="Aplica el formato de cursiva al texto seleccionado."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonSplitButton Margin="2 0 2 0" SmallImageSource="/Resources/Subrayar_16x16.png" 
+                                               Command="{Binding ToggleUnderlineCommand}">                                
+                                <RibbonSplitButton.ToolTip>
+                                    <RibbonToolTip Title="  Cursiva (Ctrl + U)"
+                                                   Description="Aplica el formato de subrayado al texto seleccionado."/>
+                                </RibbonSplitButton.ToolTip>
+                                <RibbonMenuItem Header="-------------------" 
+                                                Command="{Binding SetUnderlineStyleCommand}"
+                                                CommandParameter="{x:Static model:UnderlineStyle.Dash}"/>                                
+                                <RibbonMenuItem Header="..................................." 
+                                                Command="{Binding SetUnderlineStyleCommand}"
+                                                CommandParameter="{x:Static model:UnderlineStyle.Dotted}"/>
+                                <RibbonMenuItem Header="~~~~~~~~~~~" 
+                                                Command="{Binding SetUnderlineStyleCommand}"
+                                                CommandParameter="{x:Static model:UnderlineStyle.Wave}"/>
+                            </RibbonSplitButton>
+                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleStrikethroughCommand}" SmallImageSource="/Resources/Tachado_16x16.png">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Tachado (Ctrl + T)"
+                                                   Description="Tacha el texto seleccionado dibujando una línea encima."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleShadowCommand}" SmallImageSource="/Resources/Shadow_16x.png">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Sombra de texto (Ctrl + W)"
+                                                   Description="Agrega una sombra detrás del texto selecciona para resaltarlo."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSubscriptCommand}" SmallImageSource="/Resources/Subscript_16x16.png">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Subíndice (Ctrl + )"
+                                                   Description="Permite escribir letras muy pequeñas inmediatamente debajo de la línea de texto."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSuperscriptCommand}" SmallImageSource="/Resources/Superscript_16x16.png">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Superíndice (Ctrl + )"
+                                                   Description="Permite escribir letras muy pequeñas inmediatamente encima de la línea de texto."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSmallCapsCommand}" SmallImageSource="/Resources/Smallcaps_16x.png">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Superíndice (Ctrl + )"
+                                                   Description="Convierte los caracteres del texto seleccionado a mayúsculas pequeñas."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            
+                            <RibbonSplitButton DropDownHeight="250" CanUserResizeVertically="True" Margin="3 0 2 0"
+                                               Command="{Binding ChangeFontForeColorCommand}"
+                                               CommandParameter="{Binding ElementName=FontForeColors, Path=SelectedItem, 
+                                                                  Converter={StaticResource ColorToFontColor}}"
+                                               SmallImageSource="/Resources/Forecolor_16x16.png">
+                                <RibbonSplitButton.Resources>
+                                    <DataTemplate x:Key="ForeColorTemplate">
+                                        <RibbonGalleryItem>
+                                            <StackPanel Orientation="Horizontal" Height="18" Margin="0 0 0 2">
+                                                <TextBlock Text="{Binding Name}" Foreground="{Binding Name}" FontSize="12" 
+                                                           FontWeight="Bold" ToolTip="{Binding Name}"/>
+                                            </StackPanel>
+                                        </RibbonGalleryItem>
+                                    </DataTemplate>
+                                </RibbonSplitButton.Resources>
+                                <RibbonSplitButton.ToolTipTitle>Color de fuente</RibbonSplitButton.ToolTipTitle>
+                                <RibbonSplitButton.ToolTipDescription>Cambia el color del texto.</RibbonSplitButton.ToolTipDescription>
+                                <RibbonGallery MinColumnCount="3" Name="FontForeColors"
+                                       Command="{Binding ChangeFontForeColorCommand}"
+                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, 
+                                                          Converter={StaticResource ColorToFontColor}}"
+                                       PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem, 
+                                                                 Converter={StaticResource ColorToFontColor}}">
+                                    <RibbonGalleryCategory ItemTemplate="{StaticResource ForeColorTemplate}"
+                                                       ItemsSource="{Binding Source={StaticResource FontColors}}"/>
+                                </RibbonGallery>
+                                <RibbonMenuItem Header="Seleccionar colores personalizados..." ImageSource="/Resources/ChooseColor_16x16.png"/>
+                                
+                            </RibbonSplitButton>
+                            <RibbonSplitButton DropDownHeight="250" CanUserResizeVertically="True" Margin="3 0 0 0"
+                                               Command="{Binding ChangeFontBackColorCommand}"
+                                               CommandParameter="{Binding ElementName=FontBackColors, Path=SelectedItem, 
+                                                                  Converter={StaticResource ColorToFontColor}}"
+                                               SmallImageSource="/Resources/Highlight_16x16.png">
+                                <RibbonSplitButton.Resources>
+                                    <DataTemplate x:Key="BackColorTemplate">
+                                        <RibbonGalleryItem>
+                                            <StackPanel Orientation="Horizontal" Height="15" Margin="0 0 0 2">
+                                                <Border BorderThickness="1" BorderBrush="Black" Width="15" 
+                                                VerticalAlignment="Stretch" Background="{Binding Name}" ToolTip="{Binding Name}"/>
+                                            </StackPanel>
+                                        </RibbonGalleryItem>
+                                    </DataTemplate>
+                                </RibbonSplitButton.Resources>
+                                <RibbonSplitButton.ToolTipTitle>Color de resaltado del texto</RibbonSplitButton.ToolTipTitle>
+                                <RibbonSplitButton.ToolTipDescription>Hace que el texto parezca resaltado por un marcador.</RibbonSplitButton.ToolTipDescription>                                
+                                <RibbonGallery MinColumnCount="3" Name="FontBackColors"
+                                           Command="{Binding ChangeFontBackColorCommand}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, 
+                                                              Converter={StaticResource ColorToFontColor}}"
+                                           PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem, 
+                                                                     Converter={StaticResource ColorToFontColor}}">
+                                    <RibbonGalleryCategory ItemTemplate="{StaticResource BackColorTemplate}"
+                                                       ItemsSource="{Binding Source={StaticResource FontColors}}"/>
+                                </RibbonGallery>
+                            </RibbonSplitButton>
+                        </StackPanel>
+                    </Grid>                    
+                </RibbonGroup>
+
+                <!--El panel Párrafo-->
+                <RibbonGroup Header="Párrafo">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <RibbonButton SmallImageSource="/Resources/DecreaseIndent_16x16.png" Margin="0 0 2 0">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Disminuir sangría"
+                                                   Description="Acerca el párrafo al margen del documento."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton SmallImageSource="/Resources/IncreaseIndent_16x16.png" Margin="2 0 2 0">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Aumentar sangría"
+                                                   Description="Aleja el párrafo del margen del documento."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Command="{Binding SetListBulletCommand}" SmallImageSource="/Resources/Bullets_16x16.png"
+                                          Margin="2 0 2 0">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Viñetas"
+                                                   Description="Crea una lista con viñetas."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonSplitButton SmallImageSource="/Resources/Numbering_16x16.png"
+                                               Margin="2 0 2 0">
+                                <RibbonSplitButton.ToolTipTitle>Numeración</RibbonSplitButton.ToolTipTitle>
+                                <RibbonSplitButton.ToolTipDescription>Crea una lista numerada.</RibbonSplitButton.ToolTipDescription>
+                            </RibbonSplitButton>
+
+                            <RibbonMenuButton SmallImageSource="/Resources/LineSpacing_16x16.png" Margin="2 0 2 0">
+                                <RibbonMenuButton.Resources>
+                                    <DataTemplate x:Key="LineSpacingTemplate">
+                                        <RibbonGalleryItem>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}" Width="100"/>
+                                            </StackPanel>
+                                        </RibbonGalleryItem>
+                                    </DataTemplate>
+                                </RibbonMenuButton.Resources>
+                                <RibbonMenuButton.ToolTipTitle>Espaciado entre líneas de párrafo</RibbonMenuButton.ToolTipTitle>
+                                <RibbonMenuButton.ToolTipDescription>Cambia el espaciado entre las líneas de un párrafo.</RibbonMenuButton.ToolTipDescription>
+
+                                <RibbonGallery MaxColumnCount="1" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                               Command="{Binding SetLineSpacingCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, 
+                                                                  Converter={StaticResource StringToLineSpacing}}"
+                                               PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem, 
+                                                                        Converter={StaticResource StringToLineSpacing}}">
+                                    <RibbonGalleryCategory ItemsSource="{Binding Source={StaticResource WordProcessorCollection}, Path=LineSpacings}"                                                                         
+                                                           ItemTemplate="{StaticResource LineSpacingTemplate}"/>
+                                </RibbonGallery>                                
+                            </RibbonMenuButton>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <RibbonButton SmallImageSource="/Resources/Left_Align_16x.png" Margin="0 0 3 0"
+                                      Command="{Binding AlignParagraphCommand}"
+                                      CommandParameter="{x:Static model:ParagraphAlignment.Left}">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip MinWidth="250"
+                                               Title="  Alinear a la izquierda (Ctrl + L)"
+                                               Description="Alinea el contenido con el margen izquierdo del documento."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton SmallImageSource="/Resources/Align_Center_16x.png" Margin="3 0 3 0"
+                                      Command="{Binding AlignParagraphCommand}"
+                                      CommandParameter="{x:Static model:ParagraphAlignment.Center}">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip MinWidth="250"
+                                               Title="  Centrar (Ctrl + E)"
+                                               Description="Centra el contenido del documento."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton SmallImageSource="/Resources/Right_Align_16x.png" Margin="3 0 3 0"
+                                      Command="{Binding AlignParagraphCommand}"
+                                      CommandParameter="{x:Static model:ParagraphAlignment.Right}">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip MinWidth="250"
+                                               Title="  Alinear a la derecha (Ctrl + R)"
+                                               Description="Alinea el contenido con el margen derecho del documento."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton SmallImageSource="/Resources/Align_Justify_16x.png" Margin="3 0 3 0"
+                                      Command="{Binding AlignParagraphCommand}"
+                                      CommandParameter="{x:Static model:ParagraphAlignment.Justify}">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip MinWidth="250"
+                                               Title="  Justificar (Ctrl + J)"
+                                               Description="Alinea el texto en los márgenes izquierdo y derecho para distribuirlo de forma homogénea."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton SmallImageSource="/Resources/Paragraph_16x16.png" Margin="3 0 3 0">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Párrafo"
+                                                   Description="Muestra un cuadro de diálogo para configurar párrafos."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                        </StackPanel>
+                    </Grid>                    
+                </RibbonGroup>
+
+                <RibbonGroup Header="Edición y corrección">
+                    <StackPanel Orientation="Vertical">
+                        <RibbonButton Label="Buscar texto" SmallImageSource="/Resources/Find_16x16.png"
+                                      Command="{Binding MainWindow.ShowFindReplaceDialogCommand}">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Buscar (Ctrl + F)"
+                                               Description="Busca texto en el documento."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Label="Reemplazar texto" SmallImageSource="/Resources/Replace_16x16.png"
+                                      Command="{Binding MainWindow.ShowFindReplaceDialogCommand}">                            
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Reemplazar (Ctrl + R)"
+                                               Description="Reemplaza texto en el documento."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Label="Corregir errores ortográficos" SmallImageSource="/Resources/Spell_Check_16x.png">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="  Corrector ortográfico (Ctrl + Shift + R)"
+                                               Description="Revisa la ortografía del documento."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                    </StackPanel>
+                </RibbonGroup>
+            </RibbonTab>
+
+            <!--El tab Diseño-->
+            <RibbonTab Header="Diseño" Visibility="{Binding MainWindow.IsTabVisible, Converter={StaticResource InverseBooleanToVisibility}}">
+
+                <!--El panel Insertar-->
+                <RibbonGroup Header="Insertar">
+                    <StackPanel Orientation="Horizontal">
+                        <RibbonButton Label="Imagen" LargeImageSource="/Resources/Image_32x32.png" Margin="0 0 5 0" 
+                                      Command="{Binding InsertImageCommand}">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="Agregar una imagen"
+                                           Description="Inserta imágenes desde su equipo."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Label="Tabla" LargeImageSource="/Resources/Table_32x32.png" Margin="5 0 5 0" 
+                                      Command="{Binding MainWindow.ShowTableDialogCommand}">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="Agregar una tabla"
+                                               Description="Inserta una tabla para una mejor organización del documento."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Label="Hipervínculo" Command="{Binding MainWindow.ShowHyperlinkDialogCommand}" Margin="5 0 5 0"
+                                      LargeImageSource="/Resources/Hyperlink_32x.png">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="Agregar un hipervínculo"
+                                               Description="Crea un hipervínculo en el documento para el acceso rapido de páginas web."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonSplitButton Label="Ecuación" LargeImageSource="/Resources/Pi_32x.png" Margin="5 0 5 0">
+                            <RibbonSplitButton.ToolTip>
+                                <RibbonToolTip Title="Insertar una ecuación"
+                                               Description="Permite escribir fórmulas matemáticas en el documento."/>
+                            </RibbonSplitButton.ToolTip>
+                            <RibbonMenuItem Header="Unicode"/>
+                            <RibbonMenuItem Header="LaTeX"/>
+                        </RibbonSplitButton>
+                        <RibbonButton Label="Fecha y Hora" LargeImageSource="/Resources/DateTime_32x.png" Margin="5 0 5 0">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="Insertar fecha y hora"
+                                               Description="Agrega rápidamente la fecha u hora actual en cualquier parte del documento."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                        <RibbonButton Label="Símbolo" LargeImageSource="/Resources/Symbol_32x32.png" Margin="5 0 5 0">
+                            <RibbonButton.ToolTip>
+                                <RibbonToolTip Title="Insertar un símbolo"
+                                               Description="Permite agregar símbolos que no están en el teclado."/>
+                            </RibbonButton.ToolTip>
+                        </RibbonButton>
+                    </StackPanel>
+                </RibbonGroup>
+                
+                <RibbonGroup Header="Párrafo">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <RibbonTwoLineText Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Aplicar sangría"/>                        
+                        <RibbonTwoLineText Grid.Row="1" Grid.Column="0" Text="Izquierda: " />
+                        <RibbonTextBox Grid.Row="1" Grid.Column="1" MinHeight="25">
+                            
+                        </RibbonTextBox>
+                        <RibbonTwoLineText Grid.Row="2" Grid.Column="0" Text="Derecha: " Margin="5 1 0 0"/>
+                        <RibbonTextBox Grid.Row="2" Grid.Column="1" MinHeight="25">
+                            
+                        </RibbonTextBox>
+                        <RibbonTwoLineText Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="Espaciado"/>
+                        <RibbonTwoLineText Grid.Row="1" Grid.Column="2" Text="Antes: " Margin="20 0 0 0"/>
+                        <RibbonTextBox Grid.Row="1" Grid.Column="3" MinHeight="25">
+                            <!--<i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding SetSpaceBeforeCommand}"
+                                                           CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                                                      AncestorType=RibbonTextBox}, Path=Text}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>-->
+                            <RibbonTextBox.InputBindings>
+                                <KeyBinding Command="{Binding SetSpaceBeforeCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=RibbonTextBox}, Path=Text}"
+                                            Key="Return"/>
+                            </RibbonTextBox.InputBindings>
+                        </RibbonTextBox>
+                        <RibbonTwoLineText Grid.Row="2" Grid.Column="2" Text="Después: " Margin="5 1 0 0"/>
+                        <RibbonTextBox Grid.Row="2" Grid.Column="3" MinHeight="25">
+                            <RibbonTextBox.InputBindings>
+                                <KeyBinding Command="{Binding SetSpaceAfterCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=RibbonTextBox}, Path=Text}"
+                                            Key="Return"/>
+                            </RibbonTextBox.InputBindings>
+                        </RibbonTextBox>
+                    </Grid>
+                </RibbonGroup>
+
+                <RibbonGroup Header="Fondo de página">
+                    <StackPanel Orientation="Horizontal">
+                        <RibbonMenuButton Label="Color de página" DropDownHeight="250" CanUserResizeVertically="True"
+                                          LargeImageSource="/Resources/PageBackColor_32x.png" Margin="15 0 0 0">
+                            <RibbonMenuButton.Resources>
+                                <DataTemplate x:Key="PageBackColorTemplate">
+                                    <RibbonGalleryItem>
+                                        <StackPanel Orientation="Horizontal" Height="15" Margin="0 0 0 2">
+                                            <Border BorderThickness="1" BorderBrush="Black" Width="15" 
+                                                VerticalAlignment="Stretch" Background="{Binding Name}" ToolTip="{Binding Name}"/>
+                                        </StackPanel>
+                                    </RibbonGalleryItem>
+                                </DataTemplate>
+                            </RibbonMenuButton.Resources>
+                            <RibbonMenuButton.ToolTipTitle>Color de página</RibbonMenuButton.ToolTipTitle>
+                            <RibbonMenuButton.ToolTipDescription>Permite cambiar el color de fondo del documento.</RibbonMenuButton.ToolTipDescription>
+                            <RibbonGallery MinColumnCount="3" Name="PageBackColors"
+                                           Command="{Binding ChangePageBackColorCommand}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, 
+                                                              Converter={StaticResource ColorToFontColor}}"
+                                           PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem, 
+                                                                     Converter={StaticResource ColorToFontColor}}">
+                                <RibbonGalleryCategory ItemTemplate="{StaticResource PageBackColorTemplate}"
+                                                       ItemsSource="{Binding Source={StaticResource FontColors}}"/>
+                            </RibbonGallery>
+                        </RibbonMenuButton>
+                    </StackPanel>
+                </RibbonGroup>
+            </RibbonTab>
+            
+            <!--El tab Vista-->
+            <RibbonTab Header="Vista" Visibility="{Binding MainWindow.IsTabVisible, Converter={StaticResource InverseBooleanToVisibility}}">
+                <RibbonGroup Header="Zoom">
+                    <StackPanel Orientation="Horizontal">
+                        <RibbonButton Label="Acercar" LargeImageSource="/Resources/Zoom_in_32x.png" Margin="0 0 5 0" 
+                                      Command="{Binding SetZoomFactorCommand}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Label, 
+                                                         Converter={StaticResource StringToZoomFactor}}"/>
+                        <RibbonButton Label="Alejar" LargeImageSource="/Resources/Zoom_out_32x.png" Margin="5 0 5 0"
+                                      Command="{Binding SetZoomFactorCommand}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Label, 
+                                                         Converter={StaticResource StringToZoomFactor}}"/>
+                        <RibbonButton Label="100%" LargeImageSource="/Resources/Zoom_32x.png" Margin="5 0 5 0"
+                                      Command="{Binding SetZoomFactorCommand}"
+                                      CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Label, 
+                                                         Converter={StaticResource StringToZoomFactor}}"/>
+                    </StackPanel>
+                </RibbonGroup>
+                <RibbonGroup Header="Mostrar u ocultar">
+                    <RibbonCheckBox Label="Mostrar regla" Margin="0 5"/>
+                    <RibbonCheckBox Label="Mostrar barra de estado" Margin="0 5" Name="checkBox" IsChecked="True"/>
+                </RibbonGroup>
+            </RibbonTab>
+
+            <RibbonTab Header="Vista previa de impresión" Visibility="{Binding MainWindow.IsTabVisible, 
+                                                                       Converter={StaticResource BooleanToVisibility}}">
+                <RibbonTab.Style>
+                    <Style TargetType="RibbonTab">
+                        <Style.Triggers>
+                            <Trigger Property="Visibility" Value="Visible">
+                                <Setter Property="IsSelected" Value="True"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </RibbonTab.Style>
+                
+                <RibbonGroup Header="Imprimir">
+                    <StackPanel Orientation="Horizontal">
+                        <RibbonButton Label="Imprimir" LargeImageSource="/Resources/Print_32x32.png" Margin="0 0 5 0"
+                                      Command="{Binding PrintCommand}"/>
+                        <RibbonButton Label="Configurar página" LargeImageSource="/Resources/Configurar_impresora_32x.png" Margin="5 0 5 0"
+                                      Command="{Binding ChangePageSettingsCommand}"/>
+                    </StackPanel>
+                </RibbonGroup>
+                <RibbonGroup Header="Vista previa">
+                    <StackPanel Orientation="Horizontal">
+                        <RibbonSplitButton Label="Zoom" Command="{Binding SetPageZoomCommand}" LargeImageSource="/Resources/Zoom_32x.png" Margin="5 0 5 0"
+                                           CommandParameter="{Binding ElementName=defaultZoom, Path=Header, Converter={StaticResource StringToPageZoom}}">
+                            <RibbonMenuItem Header="100%" Command="{Binding SetPageZoomCommand}" Name="defaultZoom"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageZoom}}"/>
+                            <RibbonMenuItem Header="50%" Command="{Binding SetPageZoomCommand}" 
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageZoom}}"/>
+                            <RibbonMenuItem Header="75%" Command="{Binding SetPageZoomCommand}" 
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageZoom}}"/>
+                            <RibbonMenuItem Header="150%" Command="{Binding SetPageZoomCommand}" 
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageZoom}}"/>
+                            <RibbonMenuItem Header="200%" Command="{Binding SetPageZoomCommand}" 
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageZoom}}"/>
+                        </RibbonSplitButton>
+
+                        <RibbonSplitButton Label="Páginas" LargeImageSource="/Resources/2hojas_32x.png" Margin="5 0 5 0"
+                                           Command="{Binding SetPageLayoutCommand}"
+                                           CommandParameter="{Binding ElementName=defaultLayout, Path=Header, Converter={StaticResource StringToPageLayout}}">                            
+                            <RibbonMenuItem Header="Una página" Command="{Binding SetPageLayoutCommand}" Name="defaultLayout"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageLayout}}"/>
+                            <RibbonMenuItem Header="Dos páginas" Command="{Binding SetPageLayoutCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageLayout}}"/>
+                            <RibbonMenuItem Header="Tres páginas" Command="{Binding SetPageLayoutCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
+                                                               Converter={StaticResource StringToPageLayout}}"/>
+                        </RibbonSplitButton>
+                        <RibbonButton Label="Página anterior" LargeImageSource="/Resources/Anterior_32x32.png" Margin="5 0 5 0" 
+                                      Command="{Binding MoveToPreviousPageCommand}"/>
+                        <RibbonButton Label="Página siguiente" LargeImageSource="/Resources/Siguiente_32x32.png" Margin="5 0 5 0"
+                                      Command="{Binding MoveToNextPageCommand}"/>
+                    </StackPanel>
+                </RibbonGroup>
+                <RibbonGroup Header="Cerrar">
+                    <RibbonButton Label="Cerrar vista previa de impresión" LargeImageSource="/Resources/Close_32x32.png" 
+                                  Command="{Binding MainWindow.HideTabCommand}"/>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+
+        <StatusBar DockPanel.Dock="Bottom"
+                   Visibility="{Binding ElementName=checkBox, Path=IsChecked, Converter={StaticResource BooleanToVisibility}}">
+            <StatusBarItem>
+                <Button Content="Número de líneas: " Focusable="False" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <Slider Width="100" Minimum="10" Maximum="500" Value="100" Focusable="False" 
+                        AutoToolTipPlacement="TopLeft">
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction Command="{Binding SetZoomFactorCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                </Slider>
+            </StatusBarItem>
+        </StatusBar>
+
+        <ContentControl Content="{Binding MainWindow.IsInPreviewMode, Converter={StaticResource BooleanToWinformsHost}}"/>
+    </DockPanel>
+</Window>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2AC784E6-7BEF-4427-AAF4-716F55D3C548}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>EzWriterCustomControls</RootNamespace>
+    <AssemblyName>EzWriterCustomControls</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Tom">
+      <HintPath>..\..\..\DLLs\Tom.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PInvoke\CharRange.cs" />
+    <Compile Include="PInvoke\EnLink.cs" />
+    <Compile Include="PInvoke\FormatRange.cs" />
+    <Compile Include="PInvoke\ImageParameters.cs" />
+    <Compile Include="PInvoke\NativeMethods.cs" />
+    <Compile Include="PInvoke\Nmhdr.cs" />
+    <Compile Include="PInvoke\Rect.cs" />
+    <Compile Include="PInvoke\RichEditMessages.cs" />
+    <Compile Include="PInvoke\TableCellParameters.cs" />
+    <Compile Include="PInvoke\TableRowParameters.cs" />
+    <Compile Include="PInvoke\TextRange.cs" />
+    <Compile Include="PInvoke\UnicodeCharBuffer.cs" />
+    <Compile Include="PInvoke\WindowsMessages.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIElement\DocumentViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIElement\DocumentViewer.Designer.cs">
+      <DependentUpon>DocumentViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIElement\RichEditBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIElement\RichEditBox.Designer.cs">
+      <DependentUpon>RichEditBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIElement\RichEditPrintDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIElement\RichEditPrintDocument.Designer.cs">
+      <DependentUpon>RichEditPrintDocument.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util\ImageExtensionMethods.cs" />
+    <Compile Include="Util\FluentContextMenuStripRenderer.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EzWriterModel\EzWriterModel.csproj">
+      <Project>{6e9a8d46-20d3-4245-b003-900bd765f7f4}</Project>
+      <Name>EzWriterModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EzWriterSpellCheckingEngine\EzWriterSpellCheckingEngine.csproj">
+      <Project>{62010b78-eb2b-446d-9884-90a97c6038b4}</Project>
+      <Name>EzWriterSpellCheckingEngine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UIElement\RichEditBox.resx">
+      <DependentUpon>RichEditBox.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

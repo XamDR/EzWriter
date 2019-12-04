@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0349C55D-5078-431E-9296-7C4BE1A521D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EzWriterViewModel</RootNamespace>
+    <AssemblyName>EzWriterViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\EzWriterViewModel.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Commands\DelegatePreviewCommand.cs" />
+    <Compile Include="Core\AboutDialogViewModel.cs" />
+    <Compile Include="Core\BaseViewModel.cs" />
+    <Compile Include="Core\FindReplaceViewModel.cs" />
+    <Compile Include="Core\InsertHyperlinkViewModel.cs" />
+    <Compile Include="Core\InsertTableViewModel.cs" />
+    <Compile Include="Core\MainWindowViewModel.cs" />
+    <Compile Include="Core\WordProcessor.cs" />
+    <Compile Include="Core\WordProcessorCollections.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IAlertDialogService.cs" />
+    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\IPageSetupService.cs" />
+    <Compile Include="Services\IPrintPreviewService.cs" />
+    <Compile Include="Services\IPrintService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EzWriterModel\EzWriterModel.csproj">
+      <Project>{6e9a8d46-20d3-4245-b003-900bd765f7f4}</Project>
+      <Name>EzWriterModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

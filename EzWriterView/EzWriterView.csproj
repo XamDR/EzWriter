@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4060B3C5-C251-40F8-8BAC-9332B139CD37}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>EzWriterView</RootNamespace>
+    <AssemblyName>EzWriter</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>EzWriterIcon_32x.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.3\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Behaviors\ChildWindowBehavior.cs" />
+    <Compile Include="Converters\BooleanToWinformsHostConverter.cs" />
+    <Compile Include="Converters\ColorToFontColorConverter.cs" />
+    <Compile Include="Converters\BaseConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToCharSpacingConverter.cs" />
+    <Compile Include="Converters\StringToLineSpacingConverter.cs" />
+    <Compile Include="Converters\StringToPageLayoutConverter.cs" />
+    <Compile Include="Converters\StringToPageZoomConverter.cs" />
+    <Compile Include="Converters\StringToZoomFactorConverter.cs" />
+    <Compile Include="Dialogs\AlertDialogService.cs" />
+    <Compile Include="Dialogs\OpenFileDialogService.cs" />
+    <Compile Include="Dialogs\PageSetupService.cs" />
+    <Compile Include="Dialogs\PrintDialogService.cs" />
+    <Compile Include="Dialogs\PrintPreviewService.cs" />
+    <Compile Include="Dialogs\SaveFileDialogService.cs" />
+    <Compile Include="Styles\NumericUpDownStyle.xaml.cs">
+      <DependentUpon>NumericUpDownStyle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FindReplaceDialog.xaml.cs">
+      <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\InsertHyperlinkDialog.xaml.cs">
+      <DependentUpon>InsertHyperlinkDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\InsertSymbolDialog.xaml.cs">
+      <DependentUpon>InsertSymbolDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\InsertTableDialog.xaml.cs">
+      <DependentUpon>InsertTableDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\WindowHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Styles\NumericUpDownStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\FindReplaceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\InsertHyperlinkDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\InsertSymbolDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\InsertTableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EzWriterCustomControls\EzWriterCustomControls.csproj">
+      <Project>{2ac784e6-7bef-4427-aaf4-716f55d3c548}</Project>
+      <Name>EzWriterCustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EzWriterModel\EzWriterModel.csproj">
+      <Project>{6e9a8d46-20d3-4245-b003-900bd765f7f4}</Project>
+      <Name>EzWriterModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EzWriterViewModel\EzWriterViewModel.csproj">
+      <Project>{0349c55d-5078-431e-9296-7c4be1a521d0}</Project>
+      <Name>EzWriterViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\About_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Bold_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Bullets_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ClearFormatting_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DecreaseIndent_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EditRedo_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Find_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Forecolor_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Highlight_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\IncreaseIndent_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Italic_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\LineSpacing_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Numbering_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Help_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Table_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ChooseColor_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Paste_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Paste_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Image_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cut_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Text_width_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Save_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Copy_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pi_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cut_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\New_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MenuItem_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\EditUndo_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Tachado_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Subrayar_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Web_blue_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Translate_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\2hojas_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Configurar_impresora_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Save_As_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Vista_Previa_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Zoom_in_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Zoom_out_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Print_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Anterior_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Siguiente_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Close_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DateTime_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Zoom_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Hyperlink_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Open_File_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PageBackColor_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Left_Align_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Right_Align_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Align_justify_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Align_Center_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Paragraph_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Shadow_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Underline_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\UpperLower_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Strikethrough_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Subscript_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Superscript_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Replace_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Spell_Check_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Decrease_Font_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Increase_Font_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Smallcaps_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Symbol_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Exit_Program_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\SplashScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EzWriterIcon_32x.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EzWriterIcon_64x.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EzWriterIcon_128x.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EzWriterIcon_48x.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="EzWriterIcon_32x.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

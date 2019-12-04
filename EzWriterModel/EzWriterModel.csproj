@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6E9A8D46-20D3-4245-B003-900BD765F7F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EzWriterModel</RootNamespace>
+    <AssemblyName>EzWriterModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\EzWriterModel.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Tom">
+      <HintPath>..\..\..\DLLs\Tom.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\IDocumentViewer.cs" />
+    <Compile Include="Entities\IRichEditBox.cs" />
+    <Compile Include="Entities\IRichEditPrintDocument.cs" />
+    <Compile Include="Entities\IWordProcessor.cs" />
+    <Compile Include="Entities\TextDocument.cs" />
+    <Compile Include="Entities\TextFont.cs" />
+    <Compile Include="Entities\TextParagraph.cs" />
+    <Compile Include="Entities\TextRange.cs" />
+    <Compile Include="Entities\TextSelection.cs" />
+    <Compile Include="Entities\TextRow.cs" />
+    <Compile Include="Enums\FindOptions.cs" />
+    <Compile Include="Enums\FormatEffect.cs" />
+    <Compile Include="Enums\LetterCase.cs" />
+    <Compile Include="Enums\LineSpacingRule.cs" />
+    <Compile Include="Enums\ListStyle.cs" />
+    <Compile Include="Enums\ListType.cs" />
+    <Compile Include="Enums\ParagraphAlignment.cs" />
+    <Compile Include="Enums\TextOpenOptions.cs" />
+    <Compile Include="Enums\TextOpenSaveOptions.cs" />
+    <Compile Include="Enums\TextRangeUnit.cs" />
+    <Compile Include="Enums\TextSaveOptions.cs" />
+    <Compile Include="Enums\UnderlineColor.cs" />
+    <Compile Include="Enums\UnderlineStyle.cs" />
+    <Compile Include="Enums\VerticalCharacterAlignment.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

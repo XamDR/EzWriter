@@ -1,0 +1,1 @@
+D:\Programacion\CSharp\WPF\EzWriter\.sonarqube\out\6
