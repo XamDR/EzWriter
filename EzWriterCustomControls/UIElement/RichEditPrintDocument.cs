@@ -7,7 +7,7 @@ namespace EzWriterCustomControls.UIElement
     public partial class RichEditPrintDocument : PrintDocument, IRichEditPrintDocument
     {        
         private int firstCharOnPage;
-        private RichEditBox richEdit;
+        private readonly RichEditBox richEdit;
 
         public RichEditPrintDocument() => InitializeComponent();
 

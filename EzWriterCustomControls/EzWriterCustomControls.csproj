@@ -93,6 +93,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UIElement\DocumentViewer.resx">
+      <DependentUpon>DocumentViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIElement\RichEditBox.resx">
       <DependentUpon>RichEditBox.cs</DependentUpon>
     </EmbeddedResource>

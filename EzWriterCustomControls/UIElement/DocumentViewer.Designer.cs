@@ -28,9 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DocumentViewer));
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuItemCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenuItemPrint = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenu.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // contextMenu
+            // 
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMenuItemCopy,
+            this.tsMenuItemPrint});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(121, 48);
+            // 
+            // tsMenuItemCopy
+            // 
+            this.tsMenuItemCopy.Image = ((System.Drawing.Image)(resources.GetObject("tsMenuItemCopy.Image")));
+            this.tsMenuItemCopy.Name = "tsMenuItemCopy";
+            this.tsMenuItemCopy.Size = new System.Drawing.Size(120, 22);
+            this.tsMenuItemCopy.Text = "Copiar";
+            // 
+            // tsMenuItemPrint
+            // 
+            this.tsMenuItemPrint.Image = ((System.Drawing.Image)(resources.GetObject("tsMenuItemPrint.Image")));
+            this.tsMenuItemPrint.Name = "tsMenuItemPrint";
+            this.tsMenuItemPrint.Size = new System.Drawing.Size(120, 22);
+            this.tsMenuItemPrint.Text = "Imprimir";
+            this.contextMenu.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemCopy;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemPrint;
     }
 }

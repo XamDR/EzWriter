@@ -413,5 +413,8 @@
   <ItemGroup>
     <Resource Include="EzWriterIcon_32x.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Print_16x16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
