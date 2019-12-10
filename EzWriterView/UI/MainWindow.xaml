@@ -760,8 +760,20 @@
             </RibbonTab>
         </Ribbon>
 
-        <StatusBar DockPanel.Dock="Bottom"
-                   Visibility="{Binding ElementName=checkBox, Path=IsChecked, Converter={StaticResource BooleanToVisibility}}">
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.Style>
+                <Style TargetType="StatusBar">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=checkBox, Path=IsChecked}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding MainWindow.IsTabVisible}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StatusBar.Style>
             <StatusBarItem>
                 <Button Content="Número de líneas: " Focusable="False" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"/>
             </StatusBarItem>

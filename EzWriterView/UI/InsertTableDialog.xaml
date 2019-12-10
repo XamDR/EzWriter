@@ -19,7 +19,7 @@
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" BorderBrush="CornflowerBlue">
+        <GroupBox Grid.Row="0" BorderBrush="CornflowerBlue" Margin="5">
             <GroupBox.Header>
                 <TextBlock FontWeight="Bold" Text="Tamaño de la tabla"/>
             </GroupBox.Header>
