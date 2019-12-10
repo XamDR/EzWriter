@@ -3,7 +3,7 @@
     /// <summary>
     /// This class is used as a container for different window messages defined in the Windows API.
     /// </summary>
-    class WindowsMessages
+    static class WindowsMessages
     {
         /// <summary>
         /// Sent to a window immediately before it loses the keyboard focus.

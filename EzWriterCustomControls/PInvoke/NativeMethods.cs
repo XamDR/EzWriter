@@ -5,7 +5,7 @@ using TextObjectModel.Interop;
 
 namespace EzWriterCustomControls.PInvoke
 {
-    class NativeMethods
+    static class NativeMethods
     {
         internal static unsafe EnLink ConvertFromENLINK64(EnLink64 el64)
         {

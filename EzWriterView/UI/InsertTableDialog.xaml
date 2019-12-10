@@ -4,12 +4,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:util="clr-namespace:EzWriterView.Util"
         mc:Ignorable="d"
         Title="Insertar tabla" 
         Height="200" Width="300"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        util:WindowHelper.ShowIcon="False">
     
     <Grid>
         <Grid.RowDefinitions>

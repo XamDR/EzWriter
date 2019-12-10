@@ -1,8 +1,6 @@
 ﻿using EzWriterCustomControls.UIElement;
 using EzWriterView.Dialogs;
-using EzWriterView.Util;
 using EzWriterViewModel.Core;
-using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
@@ -27,18 +25,9 @@ namespace EzWriterView.UI
 
         public static RichEditBox RichEditBox { get; private set; }
 
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            WindowHelper.RemoveIcon(this);
-        }
-
         private DocumentViewer InitializeDocumentViewer()
         {
-            var documentViewer = new DocumentViewer
-            {
-                Zoom = 1.0
-            };
+            var documentViewer = new DocumentViewer { Zoom = 1.0 };
             return documentViewer;
         }
 

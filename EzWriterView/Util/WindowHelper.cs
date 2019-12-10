@@ -8,23 +8,37 @@ namespace EzWriterView.Util
     /// <summary>
     /// Helper class that provides functionality to remove a window's icon.
     /// </summary>
-    class WindowHelper
+    static class WindowHelper
     {
-        public static void RemoveIcon(Window window)
+        public static readonly DependencyProperty ShowIconProperty =
+            DependencyProperty.RegisterAttached("ShowIcon", typeof(bool), typeof(WindowHelper), 
+                                                new FrameworkPropertyMetadata(true, OnShowIconChanged));
+
+        public static void OnShowIconChanged(DependencyObject d, DependencyPropertyChangedEventArgs dpe)
         {
-            // Get this window's handle
-            IntPtr hwnd = new WindowInteropHelper(window).Handle;
+            var window = d as Window;
 
-            // Change the extended window style to not show a window icon
-            int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_DLGMODALFRAME);
+            window.SourceInitialized += delegate
+            {
+                // Get this window's handle
+                IntPtr hwnd = new WindowInteropHelper(window).Handle;
 
-            SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_SMALL, IntPtr.Zero);
-            SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_BIG, IntPtr.Zero);
+                // Change the extended window style to not show a window icon
+                int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+                SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_DLGMODALFRAME);
 
-            // Update the window's non-client area to reflect the changes
-            SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+                // Send the message WM_SETICON to actually remove the icon on the title bar
+                SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_SMALL, IntPtr.Zero);
+                SendMessage(hwnd, WM_SETICON, (IntPtr)ICON_BIG, IntPtr.Zero);
+
+                // Update the window's non-client area to reflect the changes
+                SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+            };            
         }
+
+        public static bool GetShowIcon(UIElement element) => (bool)element.GetValue(ShowIconProperty);
+
+        public static void SetShowIcon(UIElement element, bool value) => element.SetValue(ShowIconProperty, value);
 
         #region Native WINAPI
 

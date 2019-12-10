@@ -3,7 +3,7 @@
     /// <summary>
     /// This class is used as a container for different messages used by a rich edit control as defined in the Windows API.
     /// </summary>
-    class RichEditMessages
+    static class RichEditMessages
     {
         /// <summary>
         /// Formats a range of text in a rich edit control for a specific device.

@@ -8,11 +8,13 @@
         xmlns:behaviors="clr-namespace:EzWriterView.Behaviors"
         xmlns:conv="clr-namespace:EzWriterView.Converters"
         xmlns:local="clr-namespace:EzWriterView.UI"
+        xmlns:util="clr-namespace:EzWriterView.Util"
         xmlns:vm="clr-namespace:EzWriterViewModel.Core;assembly=EzWriterViewModel"
         xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"        
         WindowState="Maximized" 
-        Title="{Binding MainWindow.Title, StringFormat=' \{0\}EzWriter'}">
+        Title="{Binding MainWindow.Title, StringFormat=' \{0\}EzWriter'}"
+        util:WindowHelper.ShowIcon="False">
     
     <Window.DataContext>
         <vm:WordProcessor/>
