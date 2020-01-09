@@ -22,7 +22,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="{Binding AssemblyProduct}" Margin="5"/>
@@ -31,7 +31,7 @@
         <TextBlock Grid.Row="3" Text="{Binding AssemblyDescription}"
                    TextWrapping="WrapWithOverflow" Margin="5"/>
         <Button Grid.Row="4" Content="_Aceptar" IsDefault="True" HorizontalAlignment="Right" 
-                Padding="20 0 20 0" Margin="0 5 10 5">
+                MinWidth="100" Margin="0 5 10 5">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"

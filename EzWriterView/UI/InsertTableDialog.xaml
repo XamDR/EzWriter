@@ -4,10 +4,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:util="clr-namespace:EzWriterView.Util"
         mc:Ignorable="d"
         Title="Insertar tabla" 
-        Height="200" Width="300"
+        Height="300" Width="300"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner"
@@ -15,38 +16,26 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="45"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Row="0" BorderBrush="CornflowerBlue" Margin="5">
+        <GroupBox Grid.Row="0" Margin="5">
             <GroupBox.Header>
                 <TextBlock FontWeight="Bold" Text="Tamaño de la tabla"/>
             </GroupBox.Header>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+            <StackPanel>
+                <ui:NumberBox Value="{Binding NumberRows, Mode=TwoWay}" Minimum="1" Maximum="100" SmallChange="1" 
+                              Margin="5 5 10 10" SpinButtonPlacementMode="Inline"
+                              Header="Número de filas:"/>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0" Text="Número de filas:" Margin="10 0 0 0" VerticalAlignment="Center"/>
-
-                <ScrollBar Grid.Row="0" Grid.Column="1" Style="{StaticResource NumericUpDownStyle}" Value="{Binding NumberRows, Mode=TwoWay}"
-                       Minimum="1" Maximum="100" Margin="5 10 10 5" Height="27" Width="100" SmallChange="1"/>
-
-                <TextBlock Grid.Row="1" Text="Número de columnas:" Margin="10 0 0 0" VerticalAlignment="Center"/>
-
-                <ScrollBar Grid.Row="1" Grid.Column="1" Style="{StaticResource NumericUpDownStyle}" Value="{Binding NumberColumns, Mode=TwoWay}"
-                       Minimum="1" Maximum="100" Margin="5 10 10 5" Height="27" Width="100" SmallChange="1"/>
-            </Grid>
+                <ui:NumberBox Value="{Binding NumberColumns, Mode=TwoWay}" Minimum="1" Maximum="100" SmallChange="1" 
+                              Margin="5 10 10 5" SpinButtonPlacementMode="Inline"
+                              Header="Número de columnas:"/>
+            </StackPanel>
         </GroupBox>
         
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Height="25">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button MinWidth="80" Margin="0 0 30 0" Content="_Insertar" IsDefault="True"
                     Command="{Binding InsertTableCommand}"/>
             
