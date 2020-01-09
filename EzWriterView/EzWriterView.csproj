@@ -110,9 +110,6 @@
     <Compile Include="Dialogs\PrintDialogService.cs" />
     <Compile Include="Dialogs\PrintPreviewService.cs" />
     <Compile Include="Dialogs\SaveFileDialogService.cs" />
-    <Compile Include="Styles\NumericUpDownStyle.xaml.cs">
-      <DependentUpon>NumericUpDownStyle.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
@@ -161,10 +158,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\NumericUpDownStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UI\AboutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
