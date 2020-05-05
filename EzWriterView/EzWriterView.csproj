@@ -198,37 +198,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\About_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Bold_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Bullets_16x16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ClearFormatting_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\DecreaseIndent_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\EditRedo_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Find_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Forecolor_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Highlight_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\IncreaseIndent_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Italic_16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\LineSpacing_16x16.png" />
@@ -237,31 +210,13 @@
     <Resource Include="Resources\Numbering_16x16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Help_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Table_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ChooseColor_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Paste_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Paste_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Image_32x32.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Cut_16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Text_width_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Save_32x.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Copy_16x16.png" />
@@ -273,19 +228,7 @@
     <Resource Include="Resources\Cut_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\New_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\MenuItem_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\EditUndo_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Tachado_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Subrayar_16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Web_blue_16x.png" />
@@ -294,56 +237,11 @@
     <Resource Include="Resources\Translate_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\2hojas_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Configurar_impresora_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Save_As_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Vista_Previa_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Zoom_in_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Zoom_out_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Print_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Anterior_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Siguiente_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Close_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\DateTime_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Zoom_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Hyperlink_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Open_File_32x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\PageBackColor_32x.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Left_Align_16x.png" />
@@ -359,45 +257,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Paragraph_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Shadow_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Underline_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\UpperLower_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Strikethrough_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Subscript_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Superscript_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Replace_16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Spell_Check_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Decrease_Font_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Increase_Font_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Smallcaps_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Symbol_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Exit_Program_32x.png" />
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="Resources\SplashScreen.png" />
@@ -418,7 +277,10 @@
     <Resource Include="EzWriterIcon_32x.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Print_16x16.png" />
+    <Resource Include="Resources\hamburger_menu_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hamburger_menu_16x16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Runtime.WindowsRuntime.4.6.0\build\net45\System.Runtime.WindowsRuntime.targets" Condition="Exists('..\packages\System.Runtime.WindowsRuntime.4.6.0\build\net45\System.Runtime.WindowsRuntime.targets')" />

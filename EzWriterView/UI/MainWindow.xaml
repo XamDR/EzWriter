@@ -10,8 +10,9 @@
         xmlns:conv="clr-namespace:EzWriterView.Converters"
         xmlns:local="clr-namespace:EzWriterView.UI"
         xmlns:vm="clr-namespace:EzWriterViewModel.Core;assembly=EzWriterViewModel"
-        xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-        mc:Ignorable="d"        
+        xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        mc:Ignorable="d"
+        d:DesignWidth="1350"
         WindowState="Maximized" 
         Title="{Binding MainWindow.Title, StringFormat='\{0\}EzWriter'}"        
         ui:WindowHelper.UseModernWindowStyle="True">
@@ -50,7 +51,7 @@
         <conv:StringToZoomFactorConverter x:Key="StringToZoomFactor"/>
         <CollectionViewSource x:Key="SortedFontsCollection" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Source"/>
+                <cm:SortDescription PropertyName="Source"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
         <vm:WordProcessorCollections x:Key="WordProcessorCollection"/>
@@ -73,116 +74,109 @@
     </Window.InputBindings>
     
     <DockPanel LastChildFill="True" Margin="0 -22 0 0">
-        <Ribbon DockPanel.Dock="Top" KeyboardNavigation.TabNavigation="Continue">
+        <StackPanel DockPanel.Dock="Top">
+            <Ribbon KeyboardNavigation.TabNavigation="Continue" Background="White" MaxHeight="80">
 
-            <!--Botón de ayuda-->
-            <Ribbon.HelpPaneContent>
-                <RibbonButton SmallImageSource="/Resources/Help_16x16.png"/>
-            </Ribbon.HelpPaneContent>
-            
-            <!--El menú principal del Ribbon-->
-            <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu SmallImageSource="/Resources/MenuItem_16x.png">
-                    <RibbonApplicationMenuItem Header="Nuevo" Command="{Binding CreateDocumentCommand}" ImageSource="/Resources/New_32x.png"/>
-                    <RibbonApplicationMenuItem Header="Abrir" Command="{Binding OpenFileCommand}" ImageSource="/Resources/Open_File_32x.png"/>
-                    <RibbonApplicationMenuItem Header="Guardar como" Command="{Binding SaveFileCommand}" ImageSource="/Resources/Save_As_32x.png"/>
-                    <RibbonSeparator/>
-                    <RibbonApplicationMenuItem Header="Vista previa de impresión" 
-                                               Command="{Binding MainWindow.ShowTabCommand}" ImageSource="/Resources/Vista_Previa_32x.png"/>
-                    <RibbonApplicationMenuItem Header="Configurar página" ImageSource="/Resources/Configurar_impresora_32x.png"
-                                               Command="{Binding ChangePageSettingsCommand}"/>
-                    <RibbonApplicationMenuItem Header="Imprimir" Command="{Binding PrintCommand}" ImageSource="/Resources/Print_32x32.png"/>                    
-                    <RibbonSeparator/>
-                    <RibbonApplicationMenuItem Header="Acerca de EzWriter" ImageSource="/Resources/About_32x.png"
-                                               Command="{Binding MainWindow.ShowAboutDialogCommand}"/>
-                    <RibbonApplicationMenuItem Header="Salir" ImageSource="/Resources/Exit_Program_32x.png">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                <!--Botón de ayuda-->
+                <Ribbon.HelpPaneContent>
+                    <StackPanel Orientation="Horizontal">
+                        <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE109;"/>
+                        <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE115;"/>
+                        <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE170;"/>
+                        <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE11B;"/>
+                    </StackPanel>
+                </Ribbon.HelpPaneContent>
+
+                <!--El menú principal del Ribbon-->
+                <Ribbon.ApplicationMenu>
+                    <RibbonApplicationMenu SmallImageSource="/Resources/hamburger_menu_16x.png" Background="White">
+                        <RibbonApplicationMenuItem Command="{Binding CreateDocumentCommand}"                                                   
+                                                   Header="Nuevo documento">
+                            <RibbonApplicationMenuItem.Icon>
+                                <ui:FontIcon FontFamily="Segoe MDL2 Assets" FontSize="20" Glyph="&#xE130;"/>
+                            </RibbonApplicationMenuItem.Icon>
+                        </RibbonApplicationMenuItem>
+                        <RibbonApplicationMenuItem Command="{Binding OpenFileCommand}"
+                                                   FontFamily="Segoe MDL2 Assets" FontSize="20" Header="&#xE1A5;"/>
+                        <RibbonApplicationMenuItem Command="{Binding SaveFileCommand}"
+                                                   FontFamily="Segoe MDL2 Assets" FontSize="20" Header="&#xE792;"/>
+                        <RibbonSeparator/>
+                        <RibbonApplicationMenuItem Command="{Binding MainWindow.ShowTabCommand}" 
+                                                   FontFamily="Segoe MDL2 Assets" FontSize="20" Header="&#xE956;"/>
+                        <RibbonApplicationMenuItem Command="{Binding ChangePageSettingsCommand}" 
+                                                   FontFamily="Segoe MDL2 Assets" FontSize="20" Header="&#xE160;"/>
+                        <RibbonApplicationMenuItem Command="{Binding PrintCommand}" 
+                                                   FontFamily="Segoe MDL2 Assets" FontSize="20" Header="&#xE749;"/>
+                        <RibbonSeparator/>
+                        <RibbonApplicationMenuItem Command="{Binding MainWindow.ShowAboutDialogCommand}"
+                                                   FontFamily="Segoe MDL2 Assets" FontSize="20" Header="&#xE946;"/>
+                        <RibbonApplicationMenuItem FontFamily="Segoe MDL2 Assets" FontSize="20" Header="&#xE106;">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                                     MethodName="Close"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </RibbonApplicationMenuItem>                    
-                </RibbonApplicationMenu>                
-            </Ribbon.ApplicationMenu>
-            
-            <!--El tab Inicio-->
-            <RibbonTab Header="Inicio" Visibility="{Binding MainWindow.IsTabVisible, Converter={StaticResource InverseBooleanToVisibility}}">
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </RibbonApplicationMenuItem>
+                    </RibbonApplicationMenu>
+                </Ribbon.ApplicationMenu>
 
-                <!--El panel Archivo-->
-                <RibbonGroup Header="Archivo y portapapeles">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                <!--El tab Editar-->
+                <RibbonTab Header="Menú" 
+                           Visibility="{Binding MainWindow.IsTabVisible, Converter={StaticResource InverseBooleanToVisibility}}">
 
-                        <RibbonButton Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="0 5 0 0"
-                                      Label="Guardar" Command="{Binding SaveFileCommand}" LargeImageSource="/Resources/Save_32x.png">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Guardar (Ctrl + S)"
+                    <!-- Archivo y portapapeles -->
+                    <RibbonGroup>
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonButton Margin="0 0 0 0" Command="{Binding SaveFileCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE105;">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Guardar (Ctrl + S)"
                                                Description="Guarda el documento activo."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Grid.Column="1" Grid.Row="0"
-                                      Label="Rehacer" Command="{Binding CopyCommand}" SmallImageSource="/Resources/EditRedo_16x16.png">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Rehacer (Ctrl + Y)"
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Command="{Binding CopyCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE10D;">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Rehacer (Ctrl + Y)"
                                                Description="Repite la última acción."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Grid.Column="1" Grid.Row="1" 
-                                      Label="Deshacer" Command="{Binding CopyCommand}" SmallImageSource="/Resources/EditUndo_16x16.png">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Deshacer (Ctrl + Z)"
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Command="{Binding CopyCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE10E;">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Deshacer (Ctrl + Z)"
                                                Description="Deshace la última acción."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
 
-                        <RibbonSplitButton Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" 
-                                           Label="Pegar" Command="{Binding PasteCommand}" CommandParameter="0" LargeImageSource="/Resources/Paste_32x.png">
-                            <RibbonSplitButton.ToolTipTitle>Pegar (Ctrl + V)</RibbonSplitButton.ToolTipTitle>
-                            <RibbonSplitButton.ToolTipDescription>Agrega contenido del portapapeles al documento.</RibbonSplitButton.ToolTipDescription>
+                            <RibbonSplitButton Command="{Binding PasteCommand}" CommandParameter="0" FontFamily="Segoe MDL2 Assets" Label="&#xE16D;">
+                                <RibbonSplitButton.ToolTipTitle>Pegar (Ctrl + V)</RibbonSplitButton.ToolTipTitle>
+                                <RibbonSplitButton.ToolTipDescription>Agrega contenido del portapapeles al documento.</RibbonSplitButton.ToolTipDescription>
 
-                            <!-- Para ver una lista de los formatos del clipboard se puede
+                                Para ver una lista de los formatos del clipboard se puede
                             revisar el siguiente enlace: https://docs.microsoft.com/es-es/windows/win32/dataxchg/standard-clipboard-formats
-                            En resumen: 0 = RTF, 1 = Text, 3 = CF_METAFILEPICT (Imagen) -->
+                            En resumen: 0 = RTF, 1 = Text, 3 = CF_METAFILEPICT (Imagen)
 
-                            <RibbonMenuItem Header="Mantener formato" Command="{Binding PasteCommand}" CommandParameter="0"/>
-                            <RibbonMenuItem Header="Conservar solo texto" Command="{Binding PasteCommand}" CommandParameter="1"/>
-                            <RibbonMenuItem Header="Imagen" Command="{Binding PasteCommand}" CommandParameter="3"/>
-                        </RibbonSplitButton>
-                        <RibbonButton Grid.Column="4" Grid.Row="0" 
-                                      Label="Copiar" Command="{Binding CopyCommand}" SmallImageSource="/Resources/Copy_16x16.png">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Copiar (Ctrl + C)"
+                                <RibbonMenuItem Header="Mantener formato" Command="{Binding PasteCommand}" CommandParameter="0"/>
+                                <RibbonMenuItem Header="Conservar solo texto" Command="{Binding PasteCommand}" CommandParameter="1"/>
+                                <RibbonMenuItem Header="Imagen" Command="{Binding PasteCommand}" CommandParameter="3"/>
+                            </RibbonSplitButton>
+                            <RibbonButton Command="{Binding CopyCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE16F;">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Copiar (Ctrl + C)"
                                                Description="Coloca una copia de la selección en el portapapeles para que se pueda pegar en otro sitio."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Grid.Column="4" Grid.Row="1" 
-                                      Label="Cortar" Command="{Binding CutCommand}" SmallImageSource="/Resources/Cut_16x.png">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Cortar (Crtl + X)"
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Command="{Binding CutCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE16B;">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Cortar (Crtl + X)"
                                                Description="Quita la selección y la coloca en el Portapapeles para que se pueda pegar en otro sitio."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                    </Grid>
-                </RibbonGroup>
-                
-                <!--El panel Fuente-->
-                <RibbonGroup Header="Fuente">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                        </StackPanel>
+                    </RibbonGroup>
+
+                    <!-- Fuente -->
+                    <RibbonGroup>
+                        <StackPanel Orientation="Horizontal">
                             <RibbonComboBox DropDownHeight="500" IsEditable="True" IsTextSearchEnabled="True" 
                                             CanUserResizeVertically="True" Margin="0 0 2 0">
                                 <RibbonComboBox.Resources>
@@ -223,23 +217,23 @@
                                 </RibbonGallery>
                             </RibbonComboBox>
 
-                            <RibbonButton Command="{Binding IncrementFontSizeCommand}" SmallImageSource="/Resources/Increase_Font_16x.png"
+                            <RibbonButton Command="{Binding IncrementFontSizeCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE1C7;"
                                           Margin="2 0 2 0">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Aumentar tamaño de fuente."
                                                    Description="Aumenta el tamaño del texto."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton Command="{Binding DecrementFontSizeCommand}" SmallImageSource="/Resources/Decrease_Font_16x.png"
+                            <RibbonButton Command="{Binding DecrementFontSizeCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE1C6;"
                                           Margin="2 0 2 0">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Disminuir tamaño de fuente"
                                                    Description="Disminuye tamaño del texto."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonMenuButton SmallImageSource="/Resources/UpperLower_16x16.png" Margin="2 0 2 0">
+                            <RibbonMenuButton Margin="2 0 2 0" FontFamily="Segoe MDL2 Assets" Label="&#xE1C8;">
                                 <RibbonMenuButton.ToolTipTitle>Cambiar mayúsculas y minúsculas.</RibbonMenuButton.ToolTipTitle>
-                                <RibbonMenuButton.ToolTipDescription>Cambia el texto seleccionado a mayúsculas, minúsculas u otros estilos.</RibbonMenuButton.ToolTipDescription>                                
+                                <RibbonMenuButton.ToolTipDescription>Cambia el texto seleccionado a mayúsculas, minúsculas u otros estilos.</RibbonMenuButton.ToolTipDescription>
                                 <RibbonMenuItem Header="Tipo oración"
                                                 Command="{Binding ChangeCaseCommand}"
                                                 CommandParameter="{x:Static model:LetterCase.Title}"/>
@@ -256,7 +250,7 @@
                                                 Command="{Binding ChangeCaseCommand}"
                                                 CommandParameter="{x:Static model:LetterCase.Toggle}"/>
                             </RibbonMenuButton>
-                            <RibbonSplitButton SmallImageSource="/Resources/Text_width_16x.png" Margin="2 0 2 0">
+                            <RibbonSplitButton Label="*" Margin="2 0 2 0">
                                 <RibbonSplitButton.ToolTipTitle>Espaciado entre caracteres.</RibbonSplitButton.ToolTipTitle>
                                 <RibbonSplitButton.ToolTipDescription>Ajusta el espaciado entre caracteres.</RibbonSplitButton.ToolTipDescription>
                                 <RibbonSplitButton.Resources>
@@ -278,36 +272,33 @@
                                                            ItemTemplate="{StaticResource CharSpacingTemplate}"/>
                                 </RibbonGallery>
                             </RibbonSplitButton>
-                            <RibbonButton SmallImageSource="/Resources/ClearFormatting_16x16.png" Margin="2 0 0 0">
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE75C;" Margin="2 0 0 0">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="Borrar todo el formato"
                                                    Description="Quita todo el formato de la selección y deja únicamente texto sin formato."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                        </StackPanel>
-                        
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleBoldCommand}" SmallImageSource="/Resources/Bold_16x16.png">
+                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleBoldCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE8DD;">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Negrita (Ctrl + N)"
                                                    Description="Aplica el formato de negrita al texto seleccionado."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleItalicCommand}" SmallImageSource="/Resources/Italic_16x16.png">
+                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleItalicCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE8DB;">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Cursiva (Ctrl + K)"
                                                    Description="Aplica el formato de cursiva al texto seleccionado."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonSplitButton Margin="2 0 2 0" SmallImageSource="/Resources/Subrayar_16x16.png" 
-                                               Command="{Binding ToggleUnderlineCommand}">                                
+                            <RibbonSplitButton Margin="2 0 2 0" FontFamily="Segoe MDL2 Assets" Label="&#xE8DC;" 
+                                               Command="{Binding ToggleUnderlineCommand}">
                                 <RibbonSplitButton.ToolTip>
                                     <RibbonToolTip Title="  Cursiva (Ctrl + U)"
                                                    Description="Aplica el formato de subrayado al texto seleccionado."/>
                                 </RibbonSplitButton.ToolTip>
-                                <RibbonMenuItem Header="-------------------" 
+                                <RibbonMenuItem Header="" 
                                                 Command="{Binding SetUnderlineStyleCommand}"
-                                                CommandParameter="{x:Static model:UnderlineStyle.Dash}"/>                                
+                                                CommandParameter="{x:Static model:UnderlineStyle.Dash}"/>
                                 <RibbonMenuItem Header="..................................." 
                                                 Command="{Binding SetUnderlineStyleCommand}"
                                                 CommandParameter="{x:Static model:UnderlineStyle.Dotted}"/>
@@ -315,42 +306,51 @@
                                                 Command="{Binding SetUnderlineStyleCommand}"
                                                 CommandParameter="{x:Static model:UnderlineStyle.Wave}"/>
                             </RibbonSplitButton>
-                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleStrikethroughCommand}" SmallImageSource="/Resources/Tachado_16x16.png">
+
+                            <RibbonMenuButton Margin="2 0 2 0" FontFamily="Segoe MDL2 Assets" Label="&#xE164;">
+                                <RibbonMenuItem Header="Tachado"/>
+                                <RibbonMenuItem Header="Sombra"/>
+                                <RibbonMenuItem Header="Superíndice"/>
+                                <RibbonMenuItem Header="Subíndice"/>
+                                <RibbonMenuItem Header="Mayúsculas pequeñas"/>
+                            </RibbonMenuButton>
+                            
+                            <!--<RibbonButton Margin="2 0 2 0" Command="{Binding ToggleStrikethroughCommand}" Label="*">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Tachado (Ctrl + T)"
                                                    Description="Tacha el texto seleccionado dibujando una línea encima."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleShadowCommand}" SmallImageSource="/Resources/Shadow_16x.png">
+                            <RibbonButton Margin="2 0 2 0" Command="{Binding ToggleShadowCommand}" Label="*">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Sombra de texto (Ctrl + W)"
                                                    Description="Agrega una sombra detrás del texto selecciona para resaltarlo."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSubscriptCommand}" SmallImageSource="/Resources/Subscript_16x16.png">
+                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSubscriptCommand}" Label="*">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Subíndice (Ctrl + )"
                                                    Description="Permite escribir letras muy pequeñas inmediatamente debajo de la línea de texto."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSuperscriptCommand}" SmallImageSource="/Resources/Superscript_16x16.png">
+                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSuperscriptCommand}" Label="*">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Superíndice (Ctrl + )"
                                                    Description="Permite escribir letras muy pequeñas inmediatamente encima de la línea de texto."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSmallCapsCommand}" SmallImageSource="/Resources/Smallcaps_16x.png">
+                            <RibbonButton Margin="3 0 3 0" Command="{Binding ToggleSmallCapsCommand}" Label="*">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Superíndice (Ctrl + )"
                                                    Description="Convierte los caracteres del texto seleccionado a mayúsculas pequeñas."/>
                                 </RibbonButton.ToolTip>
-                            </RibbonButton>
-                            
+                            </RibbonButton>-->
+
                             <RibbonSplitButton DropDownHeight="250" CanUserResizeVertically="True" Margin="3 0 2 0"
                                                Command="{Binding ChangeFontForeColorCommand}"
                                                CommandParameter="{Binding ElementName=FontForeColors, Path=SelectedItem, 
                                                                   Converter={StaticResource ColorToFontColor}}"
-                                               SmallImageSource="/Resources/Forecolor_16x16.png">
+                                               FontFamily="Segoe MDL2 Assets" Label="&#xE186;">
                                 <RibbonSplitButton.Resources>
                                     <DataTemplate x:Key="ForeColorTemplate">
                                         <RibbonGalleryItem>
@@ -372,14 +372,14 @@
                                     <RibbonGalleryCategory ItemTemplate="{StaticResource ForeColorTemplate}"
                                                        ItemsSource="{Binding Source={StaticResource FontColors}}"/>
                                 </RibbonGallery>
-                                <RibbonMenuItem Header="Seleccionar colores personalizados..." ImageSource="/Resources/ChooseColor_16x16.png"/>
-                                
+                                <RibbonMenuItem FontFamily="Segoe MDL2 Assets" Header="&#xE2B1;"/>
+
                             </RibbonSplitButton>
                             <RibbonSplitButton DropDownHeight="250" CanUserResizeVertically="True" Margin="3 0 0 0"
                                                Command="{Binding ChangeFontBackColorCommand}"
                                                CommandParameter="{Binding ElementName=FontBackColors, Path=SelectedItem, 
                                                                   Converter={StaticResource ColorToFontColor}}"
-                                               SmallImageSource="/Resources/Highlight_16x16.png">
+                                               FontFamily="Segoe MDL2 Assets" Label="&#xE193;">
                                 <RibbonSplitButton.Resources>
                                     <DataTemplate x:Key="BackColorTemplate">
                                         <RibbonGalleryItem>
@@ -391,7 +391,7 @@
                                     </DataTemplate>
                                 </RibbonSplitButton.Resources>
                                 <RibbonSplitButton.ToolTipTitle>Color de resaltado del texto</RibbonSplitButton.ToolTipTitle>
-                                <RibbonSplitButton.ToolTipDescription>Hace que el texto parezca resaltado por un marcador.</RibbonSplitButton.ToolTipDescription>                                
+                                <RibbonSplitButton.ToolTipDescription>Hace que el texto parezca resaltado por un marcador.</RibbonSplitButton.ToolTipDescription>
                                 <RibbonGallery MinColumnCount="3" Name="FontBackColors"
                                            Command="{Binding ChangeFontBackColorCommand}"
                                            CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, 
@@ -403,43 +403,36 @@
                                 </RibbonGallery>
                             </RibbonSplitButton>
                         </StackPanel>
-                    </Grid>                    
-                </RibbonGroup>
+                    </RibbonGroup>
 
-                <!--El panel Párrafo-->
-                <RibbonGroup Header="Párrafo">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Row="0">
-                            <RibbonButton SmallImageSource="/Resources/DecreaseIndent_16x16.png" Margin="0 0 2 0">
+                    <!-- Párrafo -->
+                    <RibbonGroup>
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonButton Margin="0 0 2 0" FontFamily="Segoe MDL2 Assets" Label="&#xE298;">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Disminuir sangría"
                                                    Description="Acerca el párrafo al margen del documento."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton SmallImageSource="/Resources/IncreaseIndent_16x16.png" Margin="2 0 2 0">
+                            <RibbonButton Margin="2 0 2 0" FontFamily="Segoe MDL2 Assets" Label="&#xE291;">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Aumentar sangría"
                                                    Description="Aleja el párrafo del margen del documento."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton Command="{Binding SetListBulletCommand}" SmallImageSource="/Resources/Bullets_16x16.png"
+                            <RibbonButton Command="{Binding SetListBulletCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE14C;"
                                           Margin="2 0 2 0">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Viñetas"
                                                    Description="Crea una lista con viñetas."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonSplitButton SmallImageSource="/Resources/Numbering_16x16.png"
-                                               Margin="2 0 2 0">
+                            <RibbonSplitButton Label="*" Margin="2 0 2 0">
                                 <RibbonSplitButton.ToolTipTitle>Numeración</RibbonSplitButton.ToolTipTitle>
                                 <RibbonSplitButton.ToolTipDescription>Crea una lista numerada.</RibbonSplitButton.ToolTipDescription>
                             </RibbonSplitButton>
 
-                            <RibbonMenuButton SmallImageSource="/Resources/LineSpacing_16x16.png" Margin="2 0 2 0">
+                            <RibbonMenuButton Label="*" Margin="2 0 2 0">
                                 <RibbonMenuButton.Resources>
                                     <DataTemplate x:Key="LineSpacingTemplate">
                                         <RibbonGalleryItem>
@@ -460,12 +453,9 @@
                                                                         Converter={StaticResource StringToLineSpacing}}">
                                     <RibbonGalleryCategory ItemsSource="{Binding Source={StaticResource WordProcessorCollection}, Path=LineSpacings}"                                                                         
                                                            ItemTemplate="{StaticResource LineSpacingTemplate}"/>
-                                </RibbonGallery>                                
+                                </RibbonGallery>
                             </RibbonMenuButton>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <RibbonButton SmallImageSource="/Resources/Left_Align_16x.png" Margin="0 0 3 0"
+                            <RibbonButton Margin="0 0 3 0" SmallImageSource="/Resources/Left_Align_16x.png"
                                       Command="{Binding AlignParagraphCommand}"
                                       CommandParameter="{x:Static model:ParagraphAlignment.Left}">
                                 <RibbonButton.ToolTip>
@@ -474,7 +464,7 @@
                                                Description="Alinea el contenido con el margen izquierdo del documento."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton SmallImageSource="/Resources/Align_Center_16x.png" Margin="3 0 3 0"
+                            <RibbonButton Margin="3 0 3 0" SmallImageSource="/Resources/Align_Center_16x.png"
                                       Command="{Binding AlignParagraphCommand}"
                                       CommandParameter="{x:Static model:ParagraphAlignment.Center}">
                                 <RibbonButton.ToolTip>
@@ -483,7 +473,7 @@
                                                Description="Centra el contenido del documento."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton SmallImageSource="/Resources/Right_Align_16x.png" Margin="3 0 3 0"
+                            <RibbonButton Margin="3 0 3 0" SmallImageSource="/Resources/Right_Align_16x.png"
                                       Command="{Binding AlignParagraphCommand}"
                                       CommandParameter="{x:Static model:ParagraphAlignment.Right}">
                                 <RibbonButton.ToolTip>
@@ -501,264 +491,170 @@
                                                Description="Alinea el texto en los márgenes izquierdo y derecho para distribuirlo de forma homogénea."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
-                            <RibbonButton SmallImageSource="/Resources/Paragraph_16x16.png" Margin="3 0 3 0">
+                            <RibbonButton Label="*" Margin="3 0 3 0">
                                 <RibbonButton.ToolTip>
                                     <RibbonToolTip Title="  Párrafo"
                                                    Description="Muestra un cuadro de diálogo para configurar párrafos."/>
                                 </RibbonButton.ToolTip>
                             </RibbonButton>
                         </StackPanel>
-                    </Grid>                    
-                </RibbonGroup>
+                    </RibbonGroup>
 
-                <RibbonGroup Header="Edición y corrección">
-                    <StackPanel Orientation="Vertical">
-                        <RibbonButton Label="Buscar texto" SmallImageSource="/Resources/Find_16x16.png"
+                    <!-- Edición -->
+                    <RibbonGroup>
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE11A;" Margin="0,3"
                                       Command="{Binding MainWindow.ShowFindReplaceDialogCommand}">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Buscar (Ctrl + F)"
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Buscar (Ctrl + F)"
                                                Description="Busca texto en el documento."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Label="Reemplazar texto" SmallImageSource="/Resources/Replace_16x16.png"
-                                      Command="{Binding MainWindow.ShowFindReplaceDialogCommand}">                            
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Reemplazar (Ctrl + R)"
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE8AB;" Margin="0,3"
+                                      Command="{Binding MainWindow.ShowFindReplaceDialogCommand}">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Reemplazar (Ctrl + R)"
                                                Description="Reemplaza texto en el documento."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Label="Corregir errores ortográficos" SmallImageSource="/Resources/Spell_Check_16x.png">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="  Corrector ortográfico (Ctrl + Shift + R)"
-                                               Description="Revisa la ortografía del documento."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                    </StackPanel>
-                </RibbonGroup>
-            </RibbonTab>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE10B;" Margin="0,3">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Habilitar corrector ortográfico"
+                                               Description="Habilita o deshabilita el corrector ortográfico."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE14E;" Margin="0,3">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="  Seleccionar todo (Ctrl + A)"
+                                               Description="Selecciona todo el texto del documento."/>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                        </StackPanel>
+                    </RibbonGroup>
 
-            <!--El tab Diseño-->
-            <RibbonTab Header="Diseño" Visibility="{Binding MainWindow.IsTabVisible, Converter={StaticResource InverseBooleanToVisibility}}">
-
-                <!--El panel Insertar-->
-                <RibbonGroup Header="Insertar">
-                    <StackPanel Orientation="Horizontal">
-                        <RibbonButton Label="Imagen" LargeImageSource="/Resources/Image_32x32.png" Margin="0 0 5 0" 
+                    <!-- Insertar -->
+                    <RibbonGroup>
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonButton Margin="0 0 5 0" FontFamily="Segoe MDL2 Assets" Label="&#xEB9F;"
                                       Command="{Binding InsertImageCommand}">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="Agregar una imagen"
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="Agregar una imagen"
                                            Description="Inserta imágenes desde su equipo."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Label="Tabla" LargeImageSource="/Resources/Table_32x32.png" Margin="5 0 5 0" 
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Margin="5 0 5 0" FontFamily="Segoe MDL2 Assets" Label="&#xE80A;"
                                       Command="{Binding MainWindow.ShowTableDialogCommand}">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="Agregar una tabla"
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="Agregar una tabla"
                                                Description="Inserta una tabla para una mejor organización del documento."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Label="Hipervínculo" Command="{Binding MainWindow.ShowHyperlinkDialogCommand}" Margin="5 0 5 0"
-                                      LargeImageSource="/Resources/Hyperlink_32x.png">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="Agregar un hipervínculo"
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Command="{Binding MainWindow.ShowHyperlinkDialogCommand}" Margin="5 0 5 0"
+                                      FontFamily="Segoe MDL2 Assets" Label="&#xE167;">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="Agregar un hipervínculo"
                                                Description="Crea un hipervínculo en el documento para el acceso rapido de páginas web."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonSplitButton Label="Ecuación" LargeImageSource="/Resources/Pi_32x.png" Margin="5 0 5 0">
-                            <RibbonSplitButton.ToolTip>
-                                <RibbonToolTip Title="Insertar una ecuación"
-                                               Description="Permite escribir fórmulas matemáticas en el documento."/>
-                            </RibbonSplitButton.ToolTip>
-                            <RibbonMenuItem Header="Unicode"/>
-                            <RibbonMenuItem Header="LaTeX"/>
-                        </RibbonSplitButton>
-                        <RibbonButton Label="Fecha y Hora" LargeImageSource="/Resources/DateTime_32x.png" Margin="5 0 5 0">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="Insertar fecha y hora"
-                                               Description="Agrega rápidamente la fecha u hora actual en cualquier parte del documento."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                        <RibbonButton Label="Símbolo" LargeImageSource="/Resources/Symbol_32x32.png" Margin="5 0 5 0">
-                            <RibbonButton.ToolTip>
-                                <RibbonToolTip Title="Insertar un símbolo"
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                            <RibbonButton Margin="5 0 5 0" FontFamily="Segoe MDL2 Assets" Label="&#xE168;">
+                                <RibbonButton.ToolTip>
+                                    <RibbonToolTip Title="Insertar un símbolo"
                                                Description="Permite agregar símbolos que no están en el teclado."/>
-                            </RibbonButton.ToolTip>
-                        </RibbonButton>
-                    </StackPanel>
-                </RibbonGroup>
-                
-                <RibbonGroup Header="Párrafo">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <RibbonTwoLineText Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Aplicar sangría"/>                        
-                        <RibbonTwoLineText Grid.Row="1" Grid.Column="0" Text="Izquierda: " />
-                        <RibbonTextBox Grid.Row="1" Grid.Column="1" MinHeight="25">
-                            
-                        </RibbonTextBox>
-                        <RibbonTwoLineText Grid.Row="2" Grid.Column="0" Text="Derecha: " Margin="5 1 0 0"/>
-                        <RibbonTextBox Grid.Row="2" Grid.Column="1" MinHeight="25">
-                            
-                        </RibbonTextBox>
-                        <RibbonTwoLineText Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="Espaciado"/>
-                        <RibbonTwoLineText Grid.Row="1" Grid.Column="2" Text="Antes: " Margin="20 0 0 0"/>
-                        <RibbonTextBox Grid.Row="1" Grid.Column="3" MinHeight="25">
-                            <!--<i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction Command="{Binding SetSpaceBeforeCommand}"
-                                                           CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                                                                      AncestorType=RibbonTextBox}, Path=Text}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
-                            <RibbonTextBox.InputBindings>
-                                <KeyBinding Command="{Binding SetSpaceBeforeCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=RibbonTextBox}, Path=Text}"
-                                            Key="Return"/>
-                            </RibbonTextBox.InputBindings>
-                        </RibbonTextBox>
-                        <RibbonTwoLineText Grid.Row="2" Grid.Column="2" Text="Después: " Margin="5 1 0 0"/>
-                        <RibbonTextBox Grid.Row="2" Grid.Column="3" MinHeight="25">
-                            <RibbonTextBox.InputBindings>
-                                <KeyBinding Command="{Binding SetSpaceAfterCommand}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=RibbonTextBox}, Path=Text}"
-                                            Key="Return"/>
-                            </RibbonTextBox.InputBindings>
-                        </RibbonTextBox>
-                    </Grid>
-                </RibbonGroup>
+                                </RibbonButton.ToolTip>
+                            </RibbonButton>
+                        </StackPanel>
+                    </RibbonGroup>
 
-                <RibbonGroup Header="Fondo de página">
-                    <StackPanel Orientation="Horizontal">
-                        <RibbonMenuButton Label="Color de página" DropDownHeight="250" CanUserResizeVertically="True"
-                                          LargeImageSource="/Resources/PageBackColor_32x.png" Margin="15 0 0 0">
-                            <RibbonMenuButton.Resources>
-                                <DataTemplate x:Key="PageBackColorTemplate">
-                                    <RibbonGalleryItem>
-                                        <StackPanel Orientation="Horizontal" Height="15" Margin="0 0 0 2">
-                                            <Border BorderThickness="1" BorderBrush="Black" Width="15" 
-                                                VerticalAlignment="Stretch" Background="{Binding Name}" ToolTip="{Binding Name}"/>
-                                        </StackPanel>
-                                    </RibbonGalleryItem>
-                                </DataTemplate>
-                            </RibbonMenuButton.Resources>
-                            <RibbonMenuButton.ToolTipTitle>Color de página</RibbonMenuButton.ToolTipTitle>
-                            <RibbonMenuButton.ToolTipDescription>Permite cambiar el color de fondo del documento.</RibbonMenuButton.ToolTipDescription>
-                            <RibbonGallery MinColumnCount="3" Name="PageBackColors"
-                                           Command="{Binding ChangePageBackColorCommand}"
-                                           CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, 
-                                                              Converter={StaticResource ColorToFontColor}}"
-                                           PreviewCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=HighlightedItem, 
-                                                                     Converter={StaticResource ColorToFontColor}}">
-                                <RibbonGalleryCategory ItemTemplate="{StaticResource PageBackColorTemplate}"
-                                                       ItemsSource="{Binding Source={StaticResource FontColors}}"/>
-                            </RibbonGallery>
-                        </RibbonMenuButton>
-                    </StackPanel>
-                </RibbonGroup>
-            </RibbonTab>
-            
-            <!--El tab Vista-->
-            <RibbonTab Header="Vista" Visibility="{Binding MainWindow.IsTabVisible, Converter={StaticResource InverseBooleanToVisibility}}">
-                <RibbonGroup Header="Zoom">
-                    <StackPanel Orientation="Horizontal">
-                        <RibbonButton Label="Acercar" LargeImageSource="/Resources/Zoom_in_32x.png" Margin="0 0 5 0" 
+                    <!-- Zoom -->
+                    <RibbonGroup>
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonButton Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Label="&#xE12E;"
                                       Command="{Binding SetZoomFactorCommand}"
                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Label, 
                                                          Converter={StaticResource StringToZoomFactor}}"/>
-                        <RibbonButton Label="Alejar" LargeImageSource="/Resources/Zoom_out_32x.png" Margin="5 0 5 0"
+                            <RibbonButton Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Label="&#xE1A4;"
                                       Command="{Binding SetZoomFactorCommand}"
                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Label, 
                                                          Converter={StaticResource StringToZoomFactor}}"/>
-                        <RibbonButton Label="100%" LargeImageSource="/Resources/Zoom_32x.png" Margin="5 0 5 0"
+                            <RibbonButton Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Label="&#xE1A3;"
                                       Command="{Binding SetZoomFactorCommand}"
                                       CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Label, 
                                                          Converter={StaticResource StringToZoomFactor}}"/>
-                    </StackPanel>
-                </RibbonGroup>
-                <RibbonGroup Header="Mostrar u ocultar">
-                    <RibbonCheckBox Label="Mostrar regla" Margin="0 5"/>
-                    <RibbonCheckBox Label="Mostrar barra de estado" Margin="0 5" Name="checkBox" IsChecked="True"/>
-                </RibbonGroup>
-            </RibbonTab>
+                            <RibbonToggleButton Margin="0 4 0 0" FontFamily="Segoe MDL2 Assets" Label="&#xEF2D;"/>
+                        </StackPanel>
+                    </RibbonGroup>
+                </RibbonTab>
 
-            <RibbonTab Header="Vista previa de impresión" Visibility="{Binding MainWindow.IsTabVisible, 
+                <!-- Vista previa de impresión -->
+                <RibbonTab Header="Vista previa de impresión" Visibility="{Binding MainWindow.IsTabVisible, 
                                                                        Converter={StaticResource BooleanToVisibility}}">
-                <RibbonTab.Style>
-                    <Style TargetType="RibbonTab">
-                        <Style.Triggers>
-                            <Trigger Property="Visibility" Value="Visible">
-                                <Setter Property="IsSelected" Value="True"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </RibbonTab.Style>
-                
-                <RibbonGroup Header="Imprimir">
-                    <StackPanel Orientation="Horizontal">
-                        <RibbonButton Label="Imprimir" LargeImageSource="/Resources/Print_32x32.png" Margin="0 0 5 0"
+                    <RibbonTab.Style>
+                        <Style TargetType="RibbonTab">
+                            <Style.Triggers>
+                                <Trigger Property="Visibility" Value="Visible">
+                                    <Setter Property="IsSelected" Value="True"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RibbonTab.Style>
+
+                    <RibbonGroup Header="Imprimir">
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE749;" Margin="0 0 5 0"
                                       Command="{Binding PrintCommand}"/>
-                        <RibbonButton Label="Configurar página" LargeImageSource="/Resources/Configurar_impresora_32x.png" Margin="5 0 5 0"
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE160;" Margin="5 0 5 0"
                                       Command="{Binding ChangePageSettingsCommand}"/>
-                    </StackPanel>
-                </RibbonGroup>
-                <RibbonGroup Header="Vista previa">
-                    <StackPanel Orientation="Horizontal">
-                        <RibbonSplitButton Label="Zoom" Command="{Binding SetPageZoomCommand}" LargeImageSource="/Resources/Zoom_32x.png" Margin="5 0 5 0"
+                        </StackPanel>
+                    </RibbonGroup>
+                    <RibbonGroup Header="Vista previa">
+                        <StackPanel Orientation="Horizontal">
+                            <RibbonSplitButton Command="{Binding SetPageZoomCommand}" FontFamily="Segoe MDL2 Assets" Label="&#xE1A3;" Margin="5 0 5 0"
                                            CommandParameter="{Binding ElementName=defaultZoom, Path=Header, Converter={StaticResource StringToPageZoom}}">
-                            <RibbonMenuItem Header="100%" Command="{Binding SetPageZoomCommand}" Name="defaultZoom"
+                                <RibbonMenuItem Header="100%" Command="{Binding SetPageZoomCommand}" Name="defaultZoom"
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageZoom}}"/>
-                            <RibbonMenuItem Header="50%" Command="{Binding SetPageZoomCommand}" 
+                                <RibbonMenuItem Header="50%" Command="{Binding SetPageZoomCommand}" 
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageZoom}}"/>
-                            <RibbonMenuItem Header="75%" Command="{Binding SetPageZoomCommand}" 
+                                <RibbonMenuItem Header="75%" Command="{Binding SetPageZoomCommand}" 
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageZoom}}"/>
-                            <RibbonMenuItem Header="150%" Command="{Binding SetPageZoomCommand}" 
+                                <RibbonMenuItem Header="150%" Command="{Binding SetPageZoomCommand}" 
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageZoom}}"/>
-                            <RibbonMenuItem Header="200%" Command="{Binding SetPageZoomCommand}" 
+                                <RibbonMenuItem Header="200%" Command="{Binding SetPageZoomCommand}" 
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageZoom}}"/>
-                        </RibbonSplitButton>
+                            </RibbonSplitButton>
 
-                        <RibbonSplitButton Label="Páginas" LargeImageSource="/Resources/2hojas_32x.png" Margin="5 0 5 0"
+                            <RibbonSplitButton FontFamily="Segoe MDL2 Assets" Label="&#xF584;" Margin="5 0 5 0"
                                            Command="{Binding SetPageLayoutCommand}"
-                                           CommandParameter="{Binding ElementName=defaultLayout, Path=Header, Converter={StaticResource StringToPageLayout}}">                            
-                            <RibbonMenuItem Header="Una página" Command="{Binding SetPageLayoutCommand}" Name="defaultLayout"
+                                           CommandParameter="{Binding ElementName=defaultLayout, Path=Header, Converter={StaticResource StringToPageLayout}}">
+                                <RibbonMenuItem Header="Una página" Command="{Binding SetPageLayoutCommand}" Name="defaultLayout"
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageLayout}}"/>
-                            <RibbonMenuItem Header="Dos páginas" Command="{Binding SetPageLayoutCommand}"
+                                <RibbonMenuItem Header="Dos páginas" Command="{Binding SetPageLayoutCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageLayout}}"/>
-                            <RibbonMenuItem Header="Tres páginas" Command="{Binding SetPageLayoutCommand}"
+                                <RibbonMenuItem Header="Tres páginas" Command="{Binding SetPageLayoutCommand}"
                                             CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header, 
                                                                Converter={StaticResource StringToPageLayout}}"/>
-                        </RibbonSplitButton>
-                        <RibbonButton Label="Página anterior" LargeImageSource="/Resources/Anterior_32x32.png" Margin="5 0 5 0" 
+                            </RibbonSplitButton>
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE112;" Margin="5 0 5 0" 
                                       Command="{Binding MoveToPreviousPageCommand}"/>
-                        <RibbonButton Label="Página siguiente" LargeImageSource="/Resources/Siguiente_32x32.png" Margin="5 0 5 0"
+                            <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE111;" Margin="5 0 5 0"
                                       Command="{Binding MoveToNextPageCommand}"/>
-                    </StackPanel>
-                </RibbonGroup>
-                <RibbonGroup Header="Cerrar">
-                    <RibbonButton Label="Cerrar vista previa de impresión" LargeImageSource="/Resources/Close_32x32.png" 
+                        </StackPanel>
+                    </RibbonGroup>
+                    <RibbonGroup Header="Cerrar">
+                        <RibbonButton FontFamily="Segoe MDL2 Assets" Label="&#xE10A;"
                                   Command="{Binding MainWindow.HideTabCommand}"/>
-                </RibbonGroup>
-            </RibbonTab>
-        </Ribbon>
-
+                    </RibbonGroup>
+                </RibbonTab>
+            </Ribbon>
+            <Separator/>
+        </StackPanel>
+        
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.Style>
                 <Style TargetType="StatusBar">

@@ -18,7 +18,10 @@ namespace EzWriterView.UI
             RichEditBox = InitializeRichEdit();
             wordProcessor = InitializeWordProcessor();
             DataContext = wordProcessor;
-            Loaded += (s, e) => RichEditBox.Focus();
+            Loaded += (s, e) => 
+            {
+                RichEditBox.Focus();
+            };           
         }
 
         public static DocumentViewer Viewer { get; private set; }
